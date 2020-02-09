@@ -1,7 +1,7 @@
 {
   "@gfi-centre-ouest/generator-docker-devbox": {
     "promptValues": {
-      "projectName": "symfony-template",
+      "projectName": "factorio-calculator",
       "authorName": "Pierre LEJEUNE",
       "authorEmail": "darkanakin41@gmail.com",
       "features~0": [

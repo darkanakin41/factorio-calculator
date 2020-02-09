@@ -1,0 +1,64 @@
+/****************************
+* Colors
+****************************/
+$dark: #515151 !default;
+
+$yellow: #eabd24 !default;
+$green: #79c44f !default;
+$blue: #4e9dcb !default;
+$purple: #86499c !default;
+$pink: #da46bc !default;
+$orange: #e18314 !default;
+$red: #b73636 !default;
+$grey: #c9c9c9 !default;
+
+$textLight: transparentize(white, .13);
+
+$facebook: #3b5998;
+$gitlab: #E24329;
+$googleplus: #dd4b39;
+$instagram: #cd486b;
+$linkedin: #0077B5;
+$rss: #ff5722;
+$twitch: #6441A5;
+$twitter: #55acee;
+$youtube: #dd4b39;
+
+$primaryColor : $blue !default;
+$secondaryColor : $dark !default;
+$successColor : $green !default;
+$warningsColor : $orange !default;
+$alertColor : $red !default;
+
+/****************************
+* Breakpoints
+****************************/
+$breakpointSmall: 40em !default;
+$breakpointMedium: 64em;
+
+/****************************
+* Font
+****************************/
+
+$weightAirline : 100;
+$weightThin : 200;
+$weightLight : 300;
+$weightRegular : 400;
+$weightMedium : 500;
+$weightMediumBold : 600;
+$weightBold : 700;
+$weightExtraBold : 800;
+$weightBlack : 900;
+
+/****************************
+* Fontawesome Variables
+****************************/
+$fontawesomeFamily: 'Font Awesome 5 Free';
+$fontawesomeRegularWeight: $weightRegular;
+$fontawesomeSolidWeight: $weightBlack;
+
+/****************************
+* Animations
+****************************/
+$openingDelay: .25s;
+$cubicFastInSlowOut: cubic-bezier(.4, 0, .2, 1);

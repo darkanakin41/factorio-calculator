@@ -1,4 +1,4 @@
-# symfony-template
+# factorio-calculator
 
 ## Requirements
 

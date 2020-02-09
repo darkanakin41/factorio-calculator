@@ -1,0 +1,10 @@
+/**
+ * Replace white space in the given $string with $replacement
+ */
+@function replaceWhiteSpace($string, $replacement : "") {
+    @while (str-index($string, ' ') != null) {
+        $index: str-index($string, ' ');
+        $string: "#{str-slice($string, 0, $index - 1)}#{$replacement}#{str-slice($string, $index + 1)}";
+    }
+    @return $string;
+}
