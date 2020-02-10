@@ -18,7 +18,7 @@
                         </v-flex>
                         <v-flex xs12 pa-2>
                             <v-autocomplete
-                                    v-model="product"
+                                    v-model="calculator.product"
                                     :items="products"
                                     label="Produit"
                                     item-text="name"
@@ -49,7 +49,7 @@
                         </v-flex>
                         <v-flex xs12 md6 pa-2>
                             <v-autocomplete
-                                    v-model="machine"
+                                    v-model="calculator.machine"
                                     :items="machines"
                                     label="Machine"
                                     item-text="name"
@@ -58,7 +58,7 @@
                         </v-flex>
                         <v-flex xs12 md6 pa-2>
                             <v-autocomplete
-                                    v-model="transport"
+                                    v-model="calculator.transport"
                                     :items="transports"
                                     label="Transport"
                                     item-text="name"
@@ -95,7 +95,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in product.components" :key="item.id">
+                                <tr v-for="item in calculator.product.components" :key="item.id">
                                     <td>{{ item.product.name }}</td>
                                     <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ numberRound(machineCalculator.componentInputNeeded(item)) }}</td>
@@ -114,11 +114,11 @@
                             </h2>
                         </v-flex>
                         <v-flex xs12 md2 pa-2>
-                            <v-text-field v-model="nbSpeedModule" label="Nombre" />
+                            <v-text-field v-model="calculator.nbSpeedModule" label="Nombre" />
                         </v-flex>
                         <v-flex xs12 md4 pa-2>
                             <v-autocomplete
-                                    v-model="speedModule"
+                                    v-model="calculator.speedModule"
                                     :items="speedModules"
                                     label="Module de Vitesse"
                                     item-text="name"
@@ -126,11 +126,11 @@
                             />
                         </v-flex>
                         <v-flex xs12 md2 pa-2>
-                            <v-text-field v-model="nbProductivityModule" label="Nombre" />
+                            <v-text-field v-model="calculator.nbProductivityModule" label="Nombre" />
                         </v-flex>
                         <v-flex xs12 md4 pa-2>
                             <v-autocomplete
-                                    v-model="productivityModule"
+                                    v-model="calculator.productivityModule"
                                     :items="productivityModules"
                                     label="Module de Productivité"
                                     item-text="name"
@@ -176,7 +176,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="item in product.components" :key="item.id">
+                                <tr v-for="item in calculator.product.components" :key="item.id">
                                     <td>{{ item.product.name }}</td>
                                     <td class="text-center">{{ item.quantity }}</td>
                                     <td class="text-center">{{ numberRound(moduleCalculator.componentInputNeeded(item)) }}</td>
@@ -199,26 +199,18 @@
     import Product from "../../../_Common/Type/Product";
     import ProductComponent from "../../../_Common/Type/ProductComponent";
     import CraftingComponentCalculator from "../../Component/Calculator/CraftingComponentCalculator";
+    import Calculator, {newCalculator} from "../../../_Common/Type/Calculator";
 
     @Component({
         components: {}
     })
     export default class HomePage extends Vue {
-        product: Product | undefined;
+        calculator: Calculator;
+
         products: Array<Product>;
-
-        transport: Product | undefined;
         transports: Array<Product>;
-
-        machine: Product | undefined;
         machines: Array<Product>;
-
-        speedModule: Product | undefined;
-        nbSpeedModule: number;
         speedModules: Array<Product>;
-
-        productivityModule: Product | undefined;
-        nbProductivityModule: number;
         productivityModules: Array<Product>;
 
         productCalculator: CraftingComponentCalculator;
@@ -228,19 +220,12 @@
         data() {
             return {
                 productStore: productStore,
-                product: undefined,
+                calculator: newCalculator(),
+
                 products: undefined,
-                transport: undefined,
                 transports: undefined,
-                machine: undefined,
                 machines: undefined,
-
-                speedModule: undefined,
-                nbSpeedModule: 0,
                 speedModules: undefined,
-
-                productivityModule: undefined,
-                nbProductivityModule: 0,
                 productivityModules: undefined,
 
                 productCalculator: undefined,
@@ -250,55 +235,43 @@
         }
 
         async mounted() {
-            await productStore.getAll();
+            await productStore.getAll({sortBy: ['name'], sortDesc: [false]});
             this.products = productStore.all;
 
-            await productStore.getAll({filters: {utility: 'transport'}});
+            await productStore.getAll({filters: {utility: 'transport'}, sortBy: ['name'], sortDesc: [false]});
             this.transports = productStore.all;
 
-            await productStore.getAll({filters: {utility: 'machine'}});
+            await productStore.getAll({filters: {utility: 'machine'}, sortBy: ['name'], sortDesc: [false]});
             this.machines = productStore.all;
 
-            await productStore.getAll({filters: {utility: 'module-speed'}});
+            await productStore.getAll({filters: {utility: 'module-speed'}, sortBy: ['name'], sortDesc: [false]});
             this.speedModules = productStore.all;
 
-            await productStore.getAll({filters: {utility: 'module-productivity'}});
+            await productStore.getAll({filters: {utility: 'module-productivity'}, sortBy: ['name'], sortDesc: [false]});
             this.productivityModules = productStore.all;
         }
 
-        @Watch('product')
+        @Watch('calculator', {deep: true})
         onProductUpdate() {
             let calculator = undefined;
-            if (this.product !== undefined) {
-                calculator = new CraftingComponentCalculator(this.product, {craftingSpeed: 1});
+            if (this.calculator.product !== undefined) {
+                calculator = new CraftingComponentCalculator(this.calculator.product, {craftingSpeed: 1});
             }
             this.productCalculator = calculator;
-            this.onMachineOrTransportUpdate();
-        }
 
-        @Watch('machine')
-        @Watch('transport')
-        onMachineOrTransportUpdate() {
-            let calculator = undefined;
-            if (this.machine !== undefined && this.transport !== undefined) {
-                calculator = new CraftingComponentCalculator(this.product, this.machine);
-                calculator.setTransport(this.transport);
+            calculator = undefined;
+            if (this.calculator.machine !== undefined && this.calculator.transport !== undefined) {
+                calculator = new CraftingComponentCalculator(this.calculator.product, this.calculator.machine);
+                calculator.setTransport(this.calculator.transport);
             }
             this.machineCalculator = calculator;
-            this.onModuleUpdate();
-        }
 
-        @Watch('speedModule')
-        @Watch('nbSpeedModule')
-        @Watch('productivityModule')
-        @Watch('nbProductivityModule')
-        onModuleUpdate() {
-            let calculator = undefined;
-            if (this.speedModule !== undefined || this.productivityModule !== undefined) {
-                calculator = new CraftingComponentCalculator(this.product, this.machine);
-                calculator.setTransport(this.transport);
-                calculator.setSpeedModule(this.speedModule, this.nbSpeedModule);
-                calculator.setProductivityModule(this.productivityModule, this.nbProductivityModule);
+            calculator = undefined;
+            if (this.calculator.speedModule !== undefined || this.calculator.productivityModule !== undefined) {
+                calculator = new CraftingComponentCalculator(this.calculator.product, this.calculator.machine);
+                calculator.setTransport(this.calculator.transport);
+                calculator.setSpeedModule(this.calculator.speedModule, this.calculator.nbSpeedModule);
+                calculator.setProductivityModule(this.calculator.productivityModule, this.calculator.nbProductivityModule);
             }
             this.moduleCalculator = calculator;
         }

@@ -9,36 +9,31 @@ export default class LocalStorageManager<T extends _AbstractType> {
     }
 
 
-    getAll(payload: any = {}): object {
+    getAll(payload: any = {}): any {
         let storeContent = localStorage.getItem(this.storeName);
         if (storeContent === null) {
-            return [];
+            return {items: [], total: 0};
         }
         let data: Array<T> = JSON.parse(storeContent);
 
         data = this.applyFilters(data, payload);
-
-        let total = data.length;
-
-        return {items: data, total: total};
-    }
-
-
-    getPaginated(payload: any = {}): object {
-        let storeContent = localStorage.getItem(this.storeName);
-        if (storeContent === null) {
-            return [];
-        }
-        let data: Array<T> = JSON.parse(storeContent);
-
         data = this.applySearch(data, payload);
 
         let total = data.length;
 
         data = this.applySort(data, payload);
-        data = this.applyPagination(data, payload);
 
         return {items: data, total: total};
+    }
+
+
+    getPaginated(payload: any = {}): any {
+        let flux = this.getAll(payload);
+
+        let data = this.applyPagination(flux.items, payload);
+
+        console.log(data);
+        return {items: data, total: flux.total};
     }
 
     retrieve(payload: any): T | undefined {
@@ -170,6 +165,7 @@ export default class LocalStorageManager<T extends _AbstractType> {
         if (payload.hasOwnProperty('sortDesc')) {
             sortDesc = payload.sortDesc[0] ? -1 : 1;
         }
+        console.log([sortBy, sortDesc]);
         if (sortBy !== undefined && sortDesc !== undefined) {
             return data.sort((a: T, b: T) => {
                 let aValue:string = a[sortBy];
