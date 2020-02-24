@@ -6,6 +6,7 @@ export default interface Product extends _AbstractType {
     type: string;
     utility: string;
     craftingTime: number;
+    baseProductivity: number;
     output: number;
 
     // Transport
@@ -28,6 +29,7 @@ export function newProduct(): Product {
         id: null,
         name: '',
         craftingTime: 1,
+        baseProductivity: 1,
         output: 1,
         type: 'item',
         utility: 'component',

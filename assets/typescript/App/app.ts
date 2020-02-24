@@ -10,11 +10,13 @@ import App from './App.vue';
 import router from "./_config/router";
 import "../_Darkanakin41/Mixin";
 import "../_Common/Mixin";
+import services from '../_Common/Resource/initResources'
 
 import store from "../_Common/Store";
 
 import {vuetify} from "./_config/vuetify";
 
+Vue.prototype.$services = services
 Vue.prototype.$errorMessage = '';
 
 const app = new Vue({
@@ -25,6 +27,7 @@ const app = new Vue({
     vuetify: vuetify,
     router,
     store,
+    provide: { ...services },
 });
 
 router.beforeEach((to, from, next) => {

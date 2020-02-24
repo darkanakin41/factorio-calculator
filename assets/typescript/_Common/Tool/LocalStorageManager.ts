@@ -85,8 +85,9 @@ export default class LocalStorageManager<T extends _AbstractType> {
         if(filters !== undefined){
             return data.filter((item) => {
                 let valid = true;
-                Object.keys(filters).forEach((key) => {
-                    let itemValue = item[key];
+                Object.keys(filters).forEach((key:any) => {
+                    // @ts-ignore
+                    let itemValue:any = item[key];
                     let filterValue = filters[key];
 
                     if(itemValue !== filterValue){
@@ -132,6 +133,7 @@ export default class LocalStorageManager<T extends _AbstractType> {
             return data.filter((a:T) => {
                 let match = false;
                 Object.keys(a).forEach((key) => {
+                    // @ts-ignore
                     let value = a[key];
                     if(typeof value === 'object'){
                         return;
@@ -165,12 +167,14 @@ export default class LocalStorageManager<T extends _AbstractType> {
         if (payload.hasOwnProperty('sortDesc')) {
             sortDesc = payload.sortDesc[0] ? -1 : 1;
         }
-        console.log([sortBy, sortDesc]);
         if (sortBy !== undefined && sortDesc !== undefined) {
             return data.sort((a: T, b: T) => {
+                // @ts-ignore
                 let aValue:string = a[sortBy];
+                // @ts-ignore
                 let bValue:string = b[sortBy];
 
+                // @ts-ignore
                 return aValue.localeCompare(bValue) * sortDesc;
             });
         }

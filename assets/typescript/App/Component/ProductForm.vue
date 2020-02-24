@@ -5,7 +5,7 @@
                 {{ isCreate() ? "Création d'un produit" : "Modification du produit " + selected.name }}
             </v-card-title>
 
-            <v-form @submit="saveProduct()" v-if="selected !== undefined">
+            <v-form @submit="saveProduct()" v-if="selected !== null">
                 <v-card-text>
                     <v-layout wrap>
                         <v-flex xs12 pa-2>
@@ -54,7 +54,7 @@
                             <v-text-field v-model="selected.productivity" label="Productivité" required />
                         </v-flex>
                         <v-flex xs12 pa-2>
-                            <ProductComponentField :components.sync="selected.components" />
+                            <ProductComponentField :components.sync="selected.components" :product="selected"/>
                         </v-flex>
                     </v-layout>
                 </v-card-text>
@@ -90,8 +90,10 @@
         components: {ProductComponentField}
     })
     export default class ProductForm extends Vue {
-        @Prop({default: false}) open: boolean;
-        @Prop() selected: Product | undefined;
+        @Prop({default: false})
+        open: boolean;
+        @Prop()
+        selected: Product | undefined;
 
         data() {
             return {
@@ -113,7 +115,7 @@
 
         close() {
             this.$emit('update:open', false);
-            this.$emit('update:selected', undefined);
+            this.$emit('update:selected', null);
         }
 
         async mounted() {
@@ -121,7 +123,7 @@
         }
 
         isCreate() {
-            return this.selected === undefined || this.selected.id === null;
+            return this.selected === null || this.selected.id === null;
         }
 
     }
