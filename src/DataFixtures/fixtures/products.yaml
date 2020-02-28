@@ -1,0 +1,435 @@
+products:
+  # Base items (ore, water,...)
+  iron-ore:
+    name: Iron Ore
+  copper-ore:
+    name: Copper Ore
+  coal:
+    name: Coal
+  stone:
+    name: Stone
+  water:
+    name: Water
+    output: 1200
+    craftingTime: 16
+    type: fluid
+
+  # Smelter Products
+  iron-plate:
+    name: Iron Plate
+    craftingTime: 3
+    components:
+      - component: iron-ore
+  copper-plate:
+    name: Copper Plate
+    craftingTime: 3
+    components:
+      - component: copper-ore
+  steel-plate:
+    name: Steel Plate
+    craftingTime: 16
+    components:
+      - component: iron-plate
+        quantity: 5
+  stone-brick:
+    name: Stone Brick
+    craftingTime: 3.2
+    components:
+      - component: stone
+        quantity: 2
+
+  # Crafting items
+  copper-wire:
+    name: Copper Wire
+    craftingTime: 0.5
+    components:
+      - component: copper-plate
+  iron-gear:
+    name: Iron Gear
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+  iron-stick:
+    name: Iron Stick
+    craftingTime: 0.5
+    output: 2
+    components:
+      - component: iron-plate
+        quantity: 3
+  barrel:
+    name: Barrel
+    components:
+      - component: steel-plate
+  electronic-circuit:
+    name: Electronic Circuit
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: copper-wire
+        quantity : 3
+  inserter:
+    name: Express Transport Belt
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: iron-gear
+      - component: electronic-circuit
+  wall:
+    name: Wall
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: iron-gear
+      - component: electronic-circuit
+  grenade:
+    name: Grenade
+    craftingTime: 8
+    components:
+      - component: coal
+        quantity: 10
+      - component: iron-plate
+        quantity: 5
+  firearm-magazine:
+    name: Firearm Magazine
+    components:
+      - component: iron-plate
+        quantity: 4
+  piercing-round-magazine:
+    name: Piercing Rounds Magazine
+    components:
+      - component: steel-plate
+      - component: firearm-magazine
+      - component: copper-plate
+        quantity: 5
+  battery:
+    name: Battery
+    craftingTime: 4
+    components:
+      - component: iron-plate
+      - component: copper-plate
+  accumulator:
+    name: Accumulator
+    craftingTime: 10
+    components:
+      - component: iron-plate
+        quantity: 2
+      - component: battery
+        quantity: 5
+  radar:
+    name: Radar
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+        quantity: 10
+      - component: iron-gear
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 5
+  solar-panel:
+    name: Solar Panel
+    craftingTime: 10
+    components:
+      - component: copper-plate
+        quantity: 5
+      - component: steel-plate
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 15
+
+  # Transport
+  pipe:
+    name: Pipe
+    craftingTime: 0.5
+    utility: transport
+    components:
+      - component: iron-plate
+  pipe-to-ground:
+    name: Pipe to ground
+    craftingTime: 0.5
+    utility: transport
+    components:
+      - component: iron-plate
+      - component: pipe
+        quantity: 10
+  transport-belt:
+    name: Transport Belt
+    craftingTime: 0.5
+    output: 2
+    utility: transport
+    itemPerSecond: 15
+    components:
+      - component: iron-plate
+      - component: iron-gear
+  fast-transport-belt:
+    name: Fast Transport Belt
+    craftingTime: 0.5
+    utility: transport
+    itemPerSecond: 30
+    components:
+      - component: transport-belt
+      - component: iron-gear
+        quantity: 5
+  express-transport-belt:
+    name: Express Transport Belt
+    craftingTime: 0.5
+    utility: transport
+    itemPerSecond: 45
+    components:
+      - component: fast-transport-belt
+      - component: iron-gear
+        quantity: 10
+
+  # Machines
+  furnace:
+    name: Furnace
+    craftingTime: 0.5
+    utility: machine
+    craftingSpeed: 1
+    components:
+      - component: stone
+        quantity: 5
+  steel-furnace:
+    name: Steel Furnace
+    craftingTime: 3
+    utility: machine
+    craftingSpeed: 2
+    components:
+      - component: steel-plate
+        quantity: 6
+      - component: stone-brick
+        quantity: 10
+  assembling-machine-1:
+    name: Assembling Machine 1
+    craftingTime: 0.5
+    utility: machine
+    craftingSpeed: 0.5
+    components:
+      - component: iron-plate
+        quantity: 9
+      - component: iron-gear
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 3
+  assembling-machine-2:
+    name: Assembling Machine 2
+    craftingTime: 0.5
+    utility: machine
+    craftingSpeed: 0.75
+    components:
+      - component: assembling-machine-1
+      - component: steel-plate
+        quantity: 2
+      - component: iron-gear
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 3
+  assembling-machine-3:
+    name: Assembling Machine 3
+    craftingTime: 0.5
+    utility: machine
+    craftingSpeed: 1.25
+    components:
+      - component: assembling-machine-2
+  oil-refinery:
+    name: Oil Refinery
+    craftingTime: 8
+    utility: machine
+    craftingSpeed: 1
+    components:
+      - component: steel-plate
+        quantity: 15
+      - component: iron-gear
+        quantity: 10
+      - component: electronic-circuit
+        quantity: 10
+      - component: pipe
+        quantity: 10
+      - component: stone-brick
+        quantity: 10
+
+  # Modules
+
+  speed-module:
+    name: Speed Module
+    craftingTime: 15
+    utility: module-speed
+    energyConsumption: 0.5
+    speed: 0.2
+    components:
+      - component: electronic-circuit
+        quantity: 5
+  speed-module-2:
+    name: Speed Module 2
+    craftingTime: 30
+    utility: module-speed
+    energyConsumption: 0.6
+    speed: 0.3
+    components:
+      - component: speed-module
+        quantity: 4
+  speed-module-3:
+    name: Speed Module 3
+    craftingTime: 60
+    utility: module-speed
+    energyConsumption: 0.7
+    speed: 0.5
+    components:
+      - component: speed-module-2
+        quantity: 5
+
+  productivity-module:
+    name: Productivity Module
+    craftingTime: 15
+    utility: module-productivity
+    energyConsumption: 0.4
+    speed: -0.15
+    polution: 0.05
+    productivity: 0.04
+    components:
+      - component: electronic-circuit
+        quantity: 5
+  productivity-module-2:
+    name: Productivity Module 2
+    craftingTime: 30
+    utility: module-productivity
+    energyConsumption: 0.6
+    speed: -0.15
+    polution: 0.07
+    productivity: 0.06
+    components:
+      - component: productivity-module
+        quantity: 4
+  productivity-module-3:
+    name: Productivity Module 3
+    craftingTime: 60
+    utility: module-productivity
+    energyConsumption: 0.8
+    speed: -0.15
+    polution: 0.1
+    productivity: 0.1
+    components:
+      - component: productivity-module-2
+        quantity: 5
+
+  # Science Packs
+  automation-science-pack:
+    name: Automation Science Pack
+    craftingTime: 5
+    components:
+      - component: copper-plate
+      - component: iron-gear
+  utility-science-pack:
+    name: Utility Science Pack
+    craftingTime: 21
+    output: 3
+  logistic-science-pack:
+    name: Logistic Science Pack
+    craftingTime: 6
+    components:
+      - component: transport-belt
+      - component: inserter
+  military-science-pack:
+    name: Military Science Pack
+    craftingTime: 10
+    output: 2
+    components:
+      - component: piercing-round-magazine
+      - component: grenade
+      - component: wall
+        quantity: 2
+
+  # Modded
+  assembling-machine-4:
+    name: Assembling Machine 4
+    craftingTime: 2.5
+    utility: machine
+    craftingSpeed: 2
+    components:
+      - component: assembling-machine-3
+  assembling-machine-5:
+    name: Assembling Machine 5
+    craftingTime: 5
+    utility: machine
+    craftingSpeed: 3
+    components:
+      - component: assembling-machine-4
+
+  rapid-transport-belt-mk1:
+    name: Rapid Transport Belt MK1
+    craftingTime: 0.5
+    utility: transport
+    itemPerSecond: 60
+    components:
+      - component: express-transport-belt
+      - component: iron-gear
+        quantity: 5
+  rapid-transport-belt-mk2:
+    name: Rapid Transport Belt MK2
+    craftingTime: 0.5
+    utility: transport
+    itemPerSecond: 60
+    components:
+      - component: rapid-transport-belt-mk1
+      - component: iron-gear
+        quantity: 5
+
+
+  speed-module-4:
+    name: Speed Module 4
+    craftingTime: 120
+    utility: module-speed
+    energyConsumption: 0.9
+    speed: 1.2
+    components:
+      - component: speed-module-3
+        quantity: 6
+  speed-module-5:
+    name: Speed Module 5
+    craftingTime: 240
+    utility: module-speed
+    energyConsumption: 0.8
+    speed: 0.8
+    components:
+      - component: speed-module-4
+        quantity: 4
+  speed-module-6:
+    name: Speed Module 6
+    craftingTime: 480
+    utility: module-speed
+    energyConsumption: 1
+    speed: 1.7
+    components:
+      - component: speed-module-5
+        quantity: 4
+
+  productivity-module-4:
+    name: Productivity Module 4
+    craftingTime: 120
+    utility: module-productivity
+    energyConsumption: 1
+    speed: -0.15
+    polution: 0.14
+    productivity: 0.16
+    components:
+      - component: productivity-module-3
+        quantity: 6
+  productivity-module-5:
+    name: Productivity Module 5
+    craftingTime: 240
+    utility: module-productivity
+    energyConsumption: 1.4
+    speed: -0.15
+    polution: 0.25
+    productivity: 0.34
+    components:
+      - component: productivity-module-4
+        quantity: 4
+  productivity-module-6:
+    name: Productivity Module 6
+    craftingTime: 480
+    utility: module-productivity
+    energyConsumption: 1
+    productivity: 1.7
+    components:
+      - component: productivity-module-5
+        quantity: 4

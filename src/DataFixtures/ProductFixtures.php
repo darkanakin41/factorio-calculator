@@ -6,51 +6,96 @@ use App\Entity\Product;
 use App\Entity\ProductComponent;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Exception;
+use Symfony\Component\Yaml\Yaml;
 
 class ProductFixtures extends Fixture
 {
+    /**
+     * @var Product[]
+     */
+    private $products = [];
+
+    /**
+     * Load product fixtures
+     *
+     * @param ObjectManager $manager
+     * @throws Exception
+     */
     public function load(ObjectManager $manager)
     {
-        $ironOre = new Product();
-        $ironOre->setName('Iron Ore');
-        $ironOre->setCraftingTime(1);
-        $ironOre->setOutput(1);
-        $ironOre->setType('item');
-        $ironOre->setUtility('component');
-        $manager->persist($ironOre);
-
-        $copperOre = new Product();
-        $copperOre->setName('Copper Ore');
-        $copperOre->setCraftingTime(1);
-        $copperOre->setOutput(1);
-        $copperOre->setType('item');
-        $copperOre->setUtility('component');
-        $manager->persist($copperOre);
-
-        $coal = new Product();
-        $coal->setName('Coal');
-        $coal->setCraftingTime(1);
-        $coal->setOutput(1);
-        $coal->setType('item');
-        $coal->setUtility('component');
-        $manager->persist($coal);
-
-        $ironPlate = new Product();
-        $ironPlate->setName('Iron Plate');
-        $ironPlate->setCraftingTime(3);
-        $ironPlate->setOutput(1);
-        $ironPlate->setType('item');
-        $ironPlate->setUtility('component');
-        $manager->persist($ironPlate);
-
-        $ironPlateComponent = new ProductComponent();
-        $ironPlateComponent->setQuantity(1);
-        $ironPlateComponent->setProduct($ironPlate);
-        $ironPlateComponent->setComponent($ironOre);
-        $manager->persist($ironPlateComponent);
-
-
-
+        $this->loadProducts($manager);
         $manager->flush();
+    }
+
+    /**
+     * Load products for a yaml file
+     *
+     * @param ObjectManager $manager
+     * @throws Exception
+     */
+    private function loadProducts(ObjectManager $manager)
+    {
+        $file = Yaml::parseFile(__DIR__ . '/fixtures/products.yaml');
+
+        /**
+         * @var string $key
+         * @var array $productData
+         */
+        foreach ($file['products'] as $key => $productData) {
+            $product = new Product();
+            $this->products[$key] = $product;
+
+            foreach ($productData as $field => $value) {
+                $setter = "set" . ucfirst($field);
+
+                if($field === 'components'){
+                    foreach($value as $componentData){
+                        $manager->persist($this->loadComponent($product, $componentData));
+                    }
+                }else{
+                    if (!method_exists($product, $setter)) {
+                        throw new Exception("Unknown field " . $field . " on class " . get_class($product));
+                    }
+                    call_user_func([$product, $setter], $value);
+                }
+            }
+
+            $manager->persist($product);
+        }
+    }
+
+    /**
+     * Convert component data into ProductComponent
+     *
+     * @param Product $product
+     * @param array $componentData
+     *
+     * @return ProductComponent
+     *
+     * @throws Exception
+     */
+    private function loadComponent(Product $product, array $componentData){
+
+        $productComponent = new ProductComponent();
+        $productComponent->setProduct($product);
+
+        foreach($componentData as $field => $value){
+            $setter = "set" . ucfirst($field);
+            if (!method_exists($productComponent, $setter)) {
+                throw new Exception("Unknown field " . $field . " on class " . get_class($productComponent));
+            }
+            if($field === 'component'){
+                if(isset($this->products[$value])){
+                    $value = $this->products[$value];
+                }else{
+                    throw new Exception("Unknown component " . $value . " for product " . $product->getName());
+                }
+
+            }
+            call_user_func([$productComponent, $setter], $value);
+        }
+
+        return $productComponent;
     }
 }

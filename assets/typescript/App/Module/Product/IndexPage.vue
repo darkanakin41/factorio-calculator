@@ -39,7 +39,6 @@
         </v-data-table>
       </v-sheet>
     </v-card>
-    <ProductForm :selected.sync="selected" :open.sync="dialog"/>
   </v-container>
 </template>
 
@@ -47,8 +46,7 @@
 import { Component, Inject, Vue, Watch } from 'vue-property-decorator'
 import Loading from '../../../_Darkanakin41/Component/Loading.vue'
 import ErrorManager from '../../../_Darkanakin41/Component/Form/ErrorManager.vue'
-import Product, { newProduct } from '../../../_Common/Model/Product'
-import ProductForm from '../../Component/ProductForm.vue'
+import Product from '../../../_Common/Model/Product'
 import ProductResource from '../../../_Common/Resource/ProductResource'
 import { DataOptions, DataTableHeader } from 'vuetify'
 import ApiSort from '../../../_Darkanakin41/ApiPlatform/Model/ApiSort'
@@ -56,7 +54,7 @@ import ApiSearch from '../../../_Darkanakin41/ApiPlatform/Model/ApiSearch'
 import { PRODUCT_TYPE, PRODUCT_UTILITY } from '../../../_Common/Nomenclature'
 
 @Component({
-  components: { ProductForm, Loading, ErrorManager }
+  components: {Loading, ErrorManager }
 })
 export default class IndexPage extends Vue {
   @Inject('productResource')

@@ -23,13 +23,15 @@
                             required/>
             </v-flex>
             <v-flex xs12 md6 pa-2>
-              <v-text-field v-model="product.output"
+              <v-text-field v-model.number="product.output"
+                            type="number"
                             label="Item par craft"
                             :rules="required"
                             required/>
             </v-flex>
             <v-flex xs12 md6 pa-2>
-              <v-text-field v-model="product.craftingTime"
+              <v-text-field v-model.number="product.craftingTime"
+                            type="number"
                             label="Temps de craft"
                             :rules="required"
                             required/>
@@ -57,38 +59,44 @@
               ></v-select>
             </v-flex>
             <v-flex xs12 md12 pa-2 v-if="product.utility === 'transport' ">
-              <v-text-field v-model="product.itemPerSecond"
+              <v-text-field v-model.number="product.itemPerSecond"
+                            type="number"
                             label="Objet par Seconde"
                             :rules="required"
                             required/>
             </v-flex>
             <v-flex xs12 md12 pa-2 v-if="product.utility === 'machine' ">
-              <v-text-field v-model="product.craftingSpeed"
+              <v-text-field v-model.number="product.craftingSpeed"
+                            type="number"
                             label="Vitesse de Craft"
                             :rules="required"
                             required/>
             </v-flex>
             <v-flex xs12 md6 pa-2
                     v-if="['module-efficiency','module-speed', 'module-productivity'].indexOf(product.utility) !== -1">
-              <v-text-field v-model="product.energyConsumption"
+              <v-text-field v-model.number="product.energyConsumption"
+                            type="number"
                             label="Consommation Energetique"
                             :rules="required"
                             required/>
             </v-flex>
             <v-flex xs12 md6 pa-2 v-if="['module-speed', 'module-productivity'].indexOf(product.utility) !== -1">
-              <v-text-field v-model="product.speed"
+              <v-text-field v-model.number="product.speed"
+                            type="number"
                             label="Vitesse"
                             :rules="required"
                             required/>
             </v-flex>
             <v-flex xs12 md6 pa-2 v-if="['module-efficiency', 'module-productivity'].indexOf(product.utility) !== -1">
-              <v-text-field v-model="product.polution"
-                            :rules="required"
+              <v-text-field v-model.number="product.polution"
+                            type="number"
                             label="Polution"
+                            :rules="required"
                             required/>
             </v-flex>
             <v-flex xs12 md6 pa-2 v-if="['module-productivity'].indexOf(product.utility) !== -1">
-              <v-text-field v-model="product.productivity"
+              <v-text-field v-model.number="product.productivity"
+                            type="number"
                             label="Productivité"
                             :rules="required"
                             required/>
@@ -102,7 +110,7 @@
         </v-card-actions>
         <v-divider/>
         <v-card-text v-if="!isCreate()">
-          <product-component-field :product="product"/>
+          <product-component-field :product.sync="product"/>
         </v-card-text>
       </v-form>
     </v-card>
@@ -112,7 +120,6 @@
 <script lang="ts">
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import Product, { newProduct } from '../../../_Common/Model/Product'
-import ProductForm from '../../Component/ProductForm.vue'
 import ProductResource from '../../../_Common/Resource/ProductResource'
 import { PRODUCT_TYPE, PRODUCT_UTILITY } from '../../../_Common/Nomenclature'
 import { snackbarModule } from '../../../_Common/Store'
@@ -121,7 +128,7 @@ import RULES from '../../_config/rules'
 import ProductComponentField from '../../Component/ProductComponentField.vue'
 
 @Component({
-  components: { ProductComponentField, ProductForm }
+  components: { ProductComponentField }
 })
 export default class ProductPage extends Vue {
   @Inject('productResource')
@@ -172,7 +179,8 @@ export default class ProductPage extends Vue {
         icon: 'mdi-check'
       }
       if (this.product.id) {
-        this.product = await this.productResource.put(this.product.id, this.product)
+        delete this.product.components
+        this.product = await this.productResource.patch(this.product.id, this.product)
         snackback.title = 'La modification du produit à bien été effectuée'
       } else {
         this.product = await this.productResource.post(this.product)

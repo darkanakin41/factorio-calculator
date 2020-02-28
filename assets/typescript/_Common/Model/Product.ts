@@ -1,7 +1,7 @@
 import ProductComponent from '../Model/ProductComponent'
 import IdData from '../../_Darkanakin41/ApiPlatform/Model/IdData'
 
-export default class Product extends IdData<number> {
+export default class Product extends IdData<string> {
   name: string;
   type: string;
   utility: string;

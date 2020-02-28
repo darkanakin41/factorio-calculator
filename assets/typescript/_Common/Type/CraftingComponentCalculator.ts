@@ -1,5 +1,5 @@
-import Product from "../../../_Common/Type/Product";
-import ProductComponent from "../../../_Common/Type/ProductComponent";
+import Product from '../Model/Product'
+import ProductComponent from '../Model/ProductComponent'
 
 export default class CraftingComponentCalculator {
     private readonly product: Product;

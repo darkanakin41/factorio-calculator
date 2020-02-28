@@ -1,7 +1,6 @@
-import _AbstractType from "../../_Darkanakin41/Type/_AbstractType";
-import Product from "./Product";
+import Product from '../Model/Product'
 
-export default interface Calculator extends _AbstractType {
+export default interface Calculator{
     product: Product | undefined;
     transport: Product | undefined;
     machine: Product | undefined;
@@ -15,7 +14,6 @@ export default interface Calculator extends _AbstractType {
 
 export function newCalculator(): Calculator {
     return <Calculator>{
-        id: null,
         product: undefined,
         transport: undefined,
         machine: undefined,

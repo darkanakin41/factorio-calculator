@@ -15,7 +15,8 @@
                           required/>
         </v-flex>
         <v-flex xs6 md5 pa-2>
-          <v-text-field v-model="productComponent.quantity"
+          <v-text-field v-model.number="productComponent.quantity"
+                        type="number"
                         label="Quantité"
                         :rules="required"
                         required/>
@@ -41,15 +42,21 @@
               <td>{{ item.component.name }}</td>
               <td>{{ item.quantity }}</td>
               <td>
-                <!--            <v-btn v-on:click="removeComponent(item)" text rounded>-->
-                <!--              <i class="fa fa-trash"/>-->
-                <!--            </v-btn>-->
+                <v-btn icon color="secondary" @click="confirmDeleteComponent(item)">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
               </td>
             </tr>
             </tbody>
           </v-simple-table>
         </v-flex>
       </v-layout>
+      <validation-dialog v-model="deleteComponentDialog" :confirm-cb="() => deleteComponent(componentToDelete)">
+        <template v-slot:title>Supprimer un composant</template>
+        <template v-slot:default v-if="componentToDelete">Êtes-vous sûr de vouloir supprimer le composant : {{
+          componentToDelete.component.name }} ?
+        </template>
+      </validation-dialog>
     </template>
   </v-container>
 </template>
@@ -60,12 +67,12 @@ import Product from '../../_Common/Model/Product'
 import ProductComponent, { newProductComponent } from '../../_Common/Model/ProductComponent'
 import ProductResource from '../../_Common/Resource/ProductResource'
 import RULES from '../_config/rules'
-import { SnackbarEntry } from '../../_Darkanakin41/Store/SnackbarModule'
 import { snackbarModule } from '../../_Common/Store'
 import ProductComponentResource from '../../_Common/Resource/ProductComponentResource'
+import ValidationDialog from '../../_Darkanakin41/Component/ValidationDialog'
 
 @Component({
-  components: {}
+  components: { ValidationDialog }
 })
 export default class ProductComponentField extends Vue {
   @Inject('productResource')
@@ -76,13 +83,16 @@ export default class ProductComponentField extends Vue {
 
   @Prop()
   product: Product
+
   components: ProductComponent[]
 
   products: Product[] = []
 
   productComponent?: ProductComponent = null
+  componentToDelete?: ProductComponent = null
 
   loading: boolean = false
+  deleteComponentDialog: boolean = false
 
   required: {}[] = [
     RULES.required
@@ -99,39 +109,29 @@ export default class ProductComponentField extends Vue {
   }
 
   async updateComponents () {
-    // let apiSearch:ApiSearch[] = [{field:'"product.id"', query: this.product.id}];
     this.components = await this.productComponentResource.get({
-      searches: [{ field: '"product.id"', query: this.product.id }],
+      searches: [{ field: 'product.id', query: this.product.id }],
       props: ['id', 'quantity', 'product.name', 'component.name']
     })
   }
 
   async updateProductsList () {
-    let products = await this.productResource.get()
-    // this.products = products.filter((item: Product) => {
-    //   return this.components.find((component: ProductComponent) => {
-    //     return component.component.id === item.id
-    //   }) === undefined
-    // })
-
-    this.products = products
+    this.products = await this.productResource.get()
   }
 
   async addComponent () {
     this.loading = true
     try {
-      this.productComponent = await this.productComponentResource.post(this.productComponent)
-      this.product.components.push(this.productComponent)
+      await this.productComponentResource.post(this.productComponent)
+      await this.updateComponents()
+      this.updateProductsList()
+      this.resetComponentCreation()
 
-      let snackback: SnackbarEntry = {
+      snackbarModule.setSnackbarEntry({
         color: 'success',
         icon: 'mdi-check',
         title: 'L\'ajout du produit à bien été effectué'
-      }
-
-      this.updateProductsList()
-      this.resetComponentCreation()
-      snackbarModule.setSnackbarEntry(snackback)
+      })
     } catch (error) {
       snackbarModule.setSnackbarEntry({
         icon: 'mdi-alert-circle-outline',
@@ -144,6 +144,37 @@ export default class ProductComponentField extends Vue {
 
   resetComponentCreation () {
     this.productComponent = newProductComponent(this.product)
+  }
+
+  confirmDeleteComponent (component: ProductComponent) {
+    this.deleteComponentDialog = true
+    if (component.id) {
+      this.componentToDelete = component
+    }
+  }
+
+  async deleteComponent (component: ProductComponent) {
+    try {
+      if (component.id) {
+        await this.productComponentResource.delete(component.id)
+        this.componentToDelete = null
+        await this.updateComponents()
+        this.updateProductsList()
+        this.resetComponentCreation()
+
+        snackbarModule.setSnackbarEntry({
+          icon: 'mdi-check',
+          title: 'La suppression du composant à bien été effectué',
+          color: 'success'
+        })
+      }
+    } catch (error) {
+      snackbarModule.setSnackbarEntry({
+        icon: 'mdi-alert-circle-outline',
+        message: error,
+        color: 'error'
+      })
+    }
   }
 
 }
