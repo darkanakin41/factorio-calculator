@@ -11,6 +11,12 @@ let routes:any[] = [
         icon: 'fa fa-cubes',
         exact: true,
     },
+    {
+        label: 'Mods',
+        name: 'mod-index',
+        icon: 'fa fa-boxes',
+        exact: true,
+    },
 ];
 export default routes;
 

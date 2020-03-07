@@ -6,13 +6,14 @@
     <template v-else>
       <v-layout wrap>
         <v-flex xs6 md5 pa-2>
-          <v-autocomplete label="Produit"
-                          v-model="productComponent.component"
-                          :items="products"
-                          item-text="name"
-                          return-object
-                          :rules="required"
-                          required/>
+          <api-autocomplete :resource="productResource"
+                            :input.sync="productComponent.component"
+                            label="Produit"
+                            item-text="name"
+                            :rules="required"
+                            :required="true"
+                            :props="productComponentProps"
+          />
         </v-flex>
         <v-flex xs6 md5 pa-2>
           <v-text-field v-model.number="productComponent.quantity"
@@ -62,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
+import { Component, Inject, Prop, Vue, Watch } from 'vue-property-decorator'
 import Product from '../../_Common/Model/Product'
 import ProductComponent, { newProductComponent } from '../../_Common/Model/ProductComponent'
 import ProductResource from '../../_Common/Resource/ProductResource'
@@ -70,9 +71,10 @@ import RULES from '../_config/rules'
 import { snackbarModule } from '../../_Common/Store'
 import ProductComponentResource from '../../_Common/Resource/ProductComponentResource'
 import ValidationDialog from '../../_Darkanakin41/Component/ValidationDialog'
+import ApiAutocomplete from './ApiAutocomplete.vue'
 
 @Component({
-  components: { ValidationDialog }
+  components: { ApiAutocomplete, ValidationDialog }
 })
 export default class ProductComponentField extends Vue {
   @Inject('productResource')
@@ -93,6 +95,10 @@ export default class ProductComponentField extends Vue {
 
   loading: boolean = false
   deleteComponentDialog: boolean = false
+
+
+  productComponentProps: string[] = ['id', 'name', 'output', 'craftingTime', 'components.quantity', 'components.component.name']
+
 
   required: {}[] = [
     RULES.required
@@ -176,7 +182,6 @@ export default class ProductComponentField extends Vue {
       })
     }
   }
-
 }
 </script>
 

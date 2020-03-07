@@ -1,23 +1,23 @@
 import { Route, RouteConfig } from 'vue-router'
 
 import IndexPage from "../IndexPage.vue"
-import ProductPage from "../ProductPage.vue"
+import ModPage from "../ModPage.vue"
 
 const routes: Array<RouteConfig> = [
   {
-    name: 'product-index',
-    path: '/product/',
+    name: 'mod-index',
+    path: '/mod/',
     component: IndexPage
   },
   {
-    name: 'product-create',
-    path: '/product/create',
-    component: ProductPage
+    name: 'mod-create',
+    path: '/mod/create',
+    component: ModPage,
   },
   {
-    name: 'product-edit',
-    path: '/product/:id',
-    component: ProductPage,
+    name: 'mod-edit',
+    path: '/mod/:id',
+    component: ModPage,
     props: (route: Route) => {
       return { id: route.params.id }
     }

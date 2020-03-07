@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *        @ORM\UniqueConstraint(name="product_component_uniq", columns={"product_id", "component_id"})
  *    }
  * )
- *
+ * @ORM\Table(name="factorio_product_component")
  */
 class ProductComponent
 {
@@ -53,7 +53,7 @@ class ProductComponent
      * @var int
      * @ORM\Column(type="integer")
      *
-     * @Groups({"component:write", "product:read"})
+     * @Groups({"component:write"})
      */
     private $quantity = 1;
 
@@ -62,7 +62,7 @@ class ProductComponent
      *
      * @var Product
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", cascade={"persist"})
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      *
      * @ApiProperty(writableLink=true)
@@ -75,11 +75,11 @@ class ProductComponent
      *
      * @var Product
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="components")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", cascade={"persist"})
      * @ORM\JoinColumn(name="component_id", referencedColumnName="id")
      *
      * @ApiProperty(writableLink=true)
-     * @Groups({"component:write", "product:read"})
+     * @Groups({"component:write"})
      */
     private $component;
 

@@ -338,12 +338,13 @@ products:
       - component: wall
         quantity: 2
 
-  # Modded
+  # FactorioExtended Plus-Machine
   assembling-machine-4:
     name: Assembling Machine 4
     craftingTime: 2.5
     utility: machine
     craftingSpeed: 2
+    mod: factorio-extended-plus-machines
     components:
       - component: assembling-machine-3
   assembling-machine-5:
@@ -351,14 +352,18 @@ products:
     craftingTime: 5
     utility: machine
     craftingSpeed: 3
+    mod: factorio-extended-plus-machines
     components:
       - component: assembling-machine-4
 
+
+  # FactorioExtended Plus-Transport
   rapid-transport-belt-mk1:
     name: Rapid Transport Belt MK1
     craftingTime: 0.5
     utility: transport
     itemPerSecond: 60
+    mod: factorio-extended-plus-transport
     components:
       - component: express-transport-belt
       - component: iron-gear
@@ -368,18 +373,20 @@ products:
     craftingTime: 0.5
     utility: transport
     itemPerSecond: 60
+    mod: factorio-extended-plus-transport
     components:
       - component: rapid-transport-belt-mk1
       - component: iron-gear
         quantity: 5
 
-
+  # FactorioExtended Plus-Module
   speed-module-4:
     name: Speed Module 4
     craftingTime: 120
     utility: module-speed
     energyConsumption: 0.9
     speed: 1.2
+    mod: factorio-extended-plus-module
     components:
       - component: speed-module-3
         quantity: 6
@@ -389,6 +396,7 @@ products:
     utility: module-speed
     energyConsumption: 0.8
     speed: 0.8
+    mod: factorio-extended-plus-module
     components:
       - component: speed-module-4
         quantity: 4
@@ -398,6 +406,7 @@ products:
     utility: module-speed
     energyConsumption: 1
     speed: 1.7
+    mod: factorio-extended-plus-module
     components:
       - component: speed-module-5
         quantity: 4
@@ -410,6 +419,7 @@ products:
     speed: -0.15
     polution: 0.14
     productivity: 0.16
+    mod: factorio-extended-plus-module
     components:
       - component: productivity-module-3
         quantity: 6
@@ -421,6 +431,7 @@ products:
     speed: -0.15
     polution: 0.25
     productivity: 0.34
+    mod: factorio-extended-plus-module
     components:
       - component: productivity-module-4
         quantity: 4
@@ -430,6 +441,7 @@ products:
     utility: module-productivity
     energyConsumption: 1
     productivity: 1.7
+    mod: factorio-extended-plus-module
     components:
       - component: productivity-module-5
         quantity: 4

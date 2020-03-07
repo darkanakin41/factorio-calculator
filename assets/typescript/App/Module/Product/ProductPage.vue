@@ -16,11 +16,19 @@
       <v-form v-else>
         <v-card-text>
           <v-layout wrap>
-            <v-flex xs12 pa-2>
+            <v-flex xs12 md6 pa-2>
               <v-text-field v-model="product.name"
                             label="Nom"
                             :rules="required"
                             required/>
+            </v-flex>
+
+            <v-flex xs6 md6 pa-2>
+              <api-autocomplete :resource="modResource"
+                                label="Mod"
+                                item-text="name"
+                                :item.sync="product.mod"
+              />
             </v-flex>
             <v-flex xs12 md6 pa-2>
               <v-text-field v-model.number="product.output"
@@ -126,13 +134,18 @@ import { snackbarModule } from '../../../_Common/Store'
 import { SnackbarEntry } from '../../../_Darkanakin41/Store/SnackbarModule'
 import RULES from '../../_config/rules'
 import ProductComponentField from '../../Component/ProductComponentField.vue'
+import ApiAutocomplete from '../../Component/ApiAutocomplete.vue'
+import ModResource from '../../../_Common/Resource/ModResource'
 
 @Component({
-  components: { ProductComponentField }
+  components: { ApiAutocomplete, ProductComponentField }
 })
 export default class ProductPage extends Vue {
   @Inject('productResource')
   productResource: ProductResource
+
+  @Inject('modResource')
+  modResource: ModResource
 
   @Prop({ default: null })
   id?: number
@@ -178,8 +191,11 @@ export default class ProductPage extends Vue {
         color: 'success',
         icon: 'mdi-check'
       }
+
+      if(this.product.mod === undefined){
+        this.product.mod = null
+      }
       if (this.product.id) {
-        delete this.product.components
         this.product = await this.productResource.patch(this.product.id, this.product)
         snackback.title = 'La modification du produit à bien été effectuée'
       } else {

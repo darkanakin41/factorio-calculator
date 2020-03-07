@@ -13,11 +13,13 @@ import "../_Common/Mixin";
 import services from '../_Common/Resource/initResources'
 
 import store from "../_Common/Store";
+import Editor from '@tinymce/tinymce-vue';
 
 import {vuetify} from "./_config/vuetify";
 
 Vue.prototype.$services = services
 Vue.prototype.$errorMessage = '';
+Vue.component('tinymce-editor', Editor);
 
 const app = new Vue({
     el: '#app',

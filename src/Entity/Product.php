@@ -3,11 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
@@ -18,16 +18,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @ApiResource(
  *     itemOperations={
- *          "get"={"denormalization"={"groups"={"product:read"}}},
+ *          "get"={"normalization"={"groups"={"product:read"}}},
  *          "patch",
  *          "delete"
  *     },
- *     attributes={"pagination_client_items_per_page"=true}
+ *     collectionOperations={
+ *          "get"={"maximum_items_per_page"=100000},
+ *          "post",
+ *     },
+ *     attributes={"pagination_client_items_per_page"=true, "pagination_fetch_join_collection"=true}
  * )
  * @ApiFilter(PropertyFilter::class, arguments={"parameterName": "props" })
- * @ApiFilter(SearchFilter::class, properties={"id": "exact", "name": "ipartial", "type": "exact", "utility": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "name": "ipartial", "type": "exact", "utility": "exact", "mod.id": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"name", "type", "utility", "craftingTime"})
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\Table(name="factorio_product")
  */
 class Product
 {
@@ -39,6 +44,7 @@ class Product
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     * @Groups({"product:read"})
      */
     private $id;
 
@@ -47,7 +53,7 @@ class Product
      *
      * @var string $name
      * @ORM\Column(type="string", length=255)
-     * @Groups({"component:write", "product:read"})
+     * @Groups({"component:read", "product:read"})
      */
     private $name;
 
@@ -166,11 +172,17 @@ class Product
     private $productivity = null;
 
     /**
-     * @var ProductComponent[]
+     * The associated Mod
+     *
+     * @var Mod|null $mod
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mod", cascade={"persist"})
+     * @ORM\JoinColumn(name="mod_id", referencedColumnName="id")
+     *
+     * @ApiProperty(writableLink=true)
      * @Groups({"product:read"})
-     * @ORM\OneToMany(targetEntity="App\Entity\ProductComponent", mappedBy="product", cascade={"persist", "remove"})
      */
-    private $components;
+    private $mod = null;
 
     public function __construct()
     {
@@ -328,33 +340,14 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection|ProductComponent[]
-     */
-    public function getComponents(): Collection
+    public function getMod(): ?Mod
     {
-        return $this->components;
+        return $this->mod;
     }
 
-    public function addComponent(ProductComponent $component): self
+    public function setMod(?Mod $mod): self
     {
-        if (!$this->components->contains($component)) {
-            $this->components[] = $component;
-            $component->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComponent(ProductComponent $component): self
-    {
-        if ($this->components->contains($component)) {
-            $this->components->removeElement($component);
-            // set the owning side to null (unless already changed)
-            if ($component->getProduct() === $this) {
-                $component->setProduct(null);
-            }
-        }
+        $this->mod = $mod;
 
         return $this;
     }

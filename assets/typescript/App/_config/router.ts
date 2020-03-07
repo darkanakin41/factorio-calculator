@@ -1,25 +1,27 @@
-import Vue from 'vue';
-import VueRouter, {RouteConfig} from "vue-router";
+import Vue from 'vue'
+import VueRouter, { RouteConfig } from 'vue-router'
 
-import indexRoute from "../Module/Index/_config/router";
-import productRoute from "../Module/Product/_config/router";
-Vue.use(VueRouter);
+import indexRoute from '../Module/Index/_config/router'
+import modRoute from '../Module/Mod/_config/router'
+import productRoute from '../Module/Product/_config/router'
 
-const baseRoutes: Array<RouteConfig> = [];
+Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = baseRoutes.concat(indexRoute,productRoute,
-    [{
-        path: '*',
-        redirect: 'calculate'
-    }]
-);
+const baseRoutes: Array<RouteConfig> = []
+
+const routes: Array<RouteConfig> = baseRoutes.concat(indexRoute, modRoute, productRoute,
+  [{
+    path: '*',
+    redirect: 'calculate'
+  }]
+)
 
 const router = new VueRouter({
-    mode: 'history',
-    base: 'app',
-    linkActiveClass: '',
-    linkExactActiveClass: 'active',
-    routes: routes
-});
+  mode: 'history',
+  base: 'app',
+  linkActiveClass: '',
+  linkExactActiveClass: 'active',
+  routes: routes
+})
 
-export default router;
+export default router

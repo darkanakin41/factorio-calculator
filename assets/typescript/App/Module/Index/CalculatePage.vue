@@ -18,15 +18,17 @@
             </v-flex>
             <v-flex xs12 pa-2>
               <v-autocomplete
-                  v-model="calculator.product"
+                  v-model="productSelected"
                   :items="products"
+                  :search-input.sync="productSearch"
+                  :loading="productLoading"
                   label="Produit"
                   item-text="name"
                   return-object
               />
             </v-flex>
           </v-layout>
-          <v-layout wrap v-if="productCalculator !== undefined">
+          <v-layout wrap v-if="productCalculator !== null">
             <v-flex xs12 md4 pa-2>
               Avec une vitesse de fabrication de
               <b>{{ numberRound(productCalculator.craftingSpeed(),4) }}</b> :
@@ -40,8 +42,8 @@
               <b>{{ numberRound(productCalculator.outputPerSecond(), 4) }}</b>
             </v-flex>
           </v-layout>
-          <v-divider v-if="productCalculator !== undefined"/>
-          <v-layout wrap v-if="productCalculator !== undefined">
+          <v-divider v-if="productCalculator !== null"/>
+          <v-layout wrap v-if="productCalculator !== null">
             <v-flex xs12 pa-2>
               <h2 class="align-center">
                 Production de base pour les machines
@@ -66,7 +68,7 @@
               />
             </v-flex>
           </v-layout>
-          <v-layout wrap v-if="machineCalculator !== undefined">
+          <v-layout wrap v-if="machineCalculator !== null">
             <v-flex xs12 md3 pa-2>
               Avec une vitesse de fabrication de
               <b>{{ numberRound(machineCalculator.craftingSpeed(),4) }}</b> :
@@ -95,7 +97,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in calculator.product.components" :key="item.id">
+                <tr v-for="item in calculator.components" :key="item.id">
                   <td>{{ item.component.name }}</td>
                   <td class="text-center">{{ item.quantity }}</td>
                   <td class="text-center">{{ numberRound(machineCalculator.componentInputNeeded(item)) }}</td>
@@ -108,8 +110,8 @@
               </v-simple-table>
             </v-flex>
           </v-layout>
-          <v-divider v-if="machineCalculator !== undefined"/>
-          <v-layout wrap v-if="machineCalculator !== undefined">
+          <v-divider v-if="machineCalculator !== null"/>
+          <v-layout wrap v-if="machineCalculator !== null">
             <v-flex xs12 pa-2>
               <h2 class="align-center">
                 Ajout de modules
@@ -140,7 +142,7 @@
               />
             </v-flex>
           </v-layout>
-          <v-layout wrap v-if="moduleCalculator !== undefined">
+          <v-layout wrap v-if="moduleCalculator !== null">
             <v-flex xs12 md6 pa-2>
               Bonus de vitesse :
               <b>{{ numberRound(numberToPercent(moduleCalculator.speedBonus()), 4) }}%</b>
@@ -178,12 +180,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="item in calculator.product.components" :key="item.id">
+                <tr v-for="item in calculator.components" :key="item.id">
                   <td>{{ item.component.name }}</td>
                   <td class="text-center">{{ item.quantity }}</td>
                   <td class="text-center">{{ numberRound(moduleCalculator.componentInputNeeded(item)) }}</td>
                   <td class="text-center">{{ numberRound(moduleCalculator.componentInputTransportNeeded(item)) }}</td>
-                  <td class="text-center">{{ numberRound(moduleCalculator.componentInputTransportSupportedMachine(item))}}</td>
+                  <td class="text-center">{{
+                    numberRound(moduleCalculator.componentInputTransportSupportedMachine(item))}}
+                  </td>
                 </tr>
                 </tbody>
               </v-simple-table>
@@ -201,6 +205,8 @@ import Calculator, { newCalculator } from '../../../_Common/Type/Calculator'
 import ProductResource from '../../../_Common/Resource/ProductResource'
 import Product from '../../../_Common/Model/Product'
 import CraftingComponentCalculator from '../../../_Common/Type/CraftingComponentCalculator'
+import ApiSort from '../../../_Darkanakin41/ApiPlatform/Model/ApiSort'
+import ProductComponentResource from '../../../_Common/Resource/ProductComponentResource'
 
 @Component({
   components: {}
@@ -209,7 +215,14 @@ export default class HomePage extends Vue {
   @Inject('productResource')
   productResource: ProductResource
 
-  calculator: Calculator = newCalculator()
+  @Inject('productComponentResource')
+  productComponentResource: ProductComponentResource
+
+  calculator: Calculator = null
+
+  productSelected?: Product = null
+  productSearch: string = ''
+  productLoading: boolean = false
 
   products: Product[] = []
   transports: Product[] = []
@@ -217,61 +230,90 @@ export default class HomePage extends Vue {
   speedModules: Product[] = []
   productivityModules: Product[] = []
 
-  productCalculator?: CraftingComponentCalculator = undefined
-  machineCalculator?: CraftingComponentCalculator = undefined
-  moduleCalculator?: CraftingComponentCalculator = undefined
+  productCalculator?: CraftingComponentCalculator = null
+  machineCalculator?: CraftingComponentCalculator = null
+  moduleCalculator?: CraftingComponentCalculator = null
 
-  async mounted () {
-    let sortBy = {
-      field: 'name',
-      desc: false
-    }
+  sortBy: ApiSort = {
+    field: 'name',
+    desc: false
+  }
 
-    this.products = await this.productResource.get({
-      sort: sortBy,
-      props: ['id', 'name', 'output', 'craftingTime', 'components.quantity', 'components.component.name'],
-    }) as Product[]
+  async created () {
+    this.calculator = newCalculator()
+
     this.transports = await this.productResource.get({
       searches: [{ field: 'utility', query: 'transport' }],
-      sort: sortBy,
-      props: ['id', 'name', 'itemPerSecond'],
+      sort: this.sortBy,
+      props: ['id', 'name', 'itemPerSecond']
     }) as Product[]
     this.machines = await this.productResource.get({
       searches: [{ field: 'utility', query: 'machine' }],
-      sort: sortBy,
-      props: ['id', 'name', 'craftingSpeed'],
+      sort: this.sortBy,
+      props: ['id', 'name', 'craftingSpeed']
     }) as Product[]
     this.speedModules = await this.productResource.get({
       searches: [{ field: 'utility', query: 'module-speed' }],
-      sort: sortBy,
-      props: ['id', 'name', 'output', 'craftingTime', 'energyConsumption', 'speed'],
+      sort: this.sortBy,
+      props: ['id', 'name', 'output', 'craftingTime', 'energyConsumption', 'speed']
     }) as Product[]
     this.productivityModules = await this.productResource.get({
       searches: [{
         field: 'utility',
         query: 'module-productivity'
-      }], sort: sortBy,
-      props: ['id', 'name', 'output', 'craftingTime', 'speed', 'polution', 'productivity','energyConsumption'],
+      }], sort: this.sortBy,
+      props: ['id', 'name', 'output', 'craftingTime', 'speed', 'polution', 'productivity', 'energyConsumption']
     }) as Product[]
 
   }
 
+  @Watch('productSelected', { deep: true })
+  async onProductSelectedUpdated () {
+    this.calculator.product = this.productSelected
+
+    this.calculator.components = await this.productComponentResource.get({
+      searches: [{ field: 'product.id', query: this.calculator.product.id as string }],
+      props: ['id', 'quantity', 'product.name', 'component.name']
+    })
+  }
+
+
+  // productSearchUpdate = debounce(this.loadProducts, 500)
+
+  @Watch('productSearch')
+  async loadProducts () {
+
+    if (this.productSearch === '') {
+      this.products = []
+      return
+    }
+    this.productLoading = true
+
+    this.products = await this.productResource.get({
+      sort: this.sortBy,
+      props: ['id', 'name', 'output', 'craftingTime', 'components.quantity', 'components.component.name'],
+      searches: [{ field: 'name', query: this.productSearch }]
+    }) as Product[]
+
+    this.productLoading = false
+  }
+
   @Watch('calculator', { deep: true })
   onProductUpdate () {
-    let calculator = undefined
+    let calculator = null
     if (this.calculator.product !== undefined) {
       calculator = new CraftingComponentCalculator(this.calculator.product, { craftingSpeed: 1 })
     }
     this.productCalculator = calculator
 
-    calculator = undefined
+    calculator = null
     if (this.calculator.machine !== undefined && this.calculator.transport !== undefined) {
       calculator = new CraftingComponentCalculator(this.calculator.product, this.calculator.machine)
       calculator.setTransport(this.calculator.transport)
     }
     this.machineCalculator = calculator
 
-    calculator = undefined
+    calculator = null
     if (this.calculator.speedModule !== undefined || this.calculator.productivityModule !== undefined) {
       calculator = new CraftingComponentCalculator(this.calculator.product, this.calculator.machine)
       calculator.setTransport(this.calculator.transport)
