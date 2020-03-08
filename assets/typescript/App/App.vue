@@ -39,7 +39,7 @@ export default class App extends Vue {
     return {
       drawer: true,
       // logo: Logo,
-      sitename: 'Factorio Calculator',
+      sitename: 'Factorio CalculatorData',
     }
   }
 

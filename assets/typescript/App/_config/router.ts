@@ -2,17 +2,18 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
 import indexRoute from '../Module/Index/_config/router'
+import itemRoute from '../Module/Item/_config/router'
 import modRoute from '../Module/Mod/_config/router'
-import productRoute from '../Module/Product/_config/router'
+import recipeRoute from '../Module/Recipe/_config/router'
 
 Vue.use(VueRouter)
 
 const baseRoutes: Array<RouteConfig> = []
 
-const routes: Array<RouteConfig> = baseRoutes.concat(indexRoute, modRoute, productRoute,
+const routes: Array<RouteConfig> = baseRoutes.concat(indexRoute, itemRoute, modRoute, recipeRoute,
   [{
     path: '*',
-    redirect: 'calculate'
+    redirect: 'item-index'
   }]
 )
 

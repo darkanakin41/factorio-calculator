@@ -1,0 +1,510 @@
+recipes:
+
+  # Smelter Products
+  iron-plate:
+    craftingTime: 3
+    components:
+      - component: iron-ore
+  copper-plate:
+    craftingTime: 3
+    components:
+      - component: copper-ore
+  steel-plate:
+    craftingTime: 16
+    components:
+      - component: iron-plate
+        quantity: 5
+  stone-brick:
+    craftingTime: 3.2
+    components:
+      - component: stone
+        quantity: 2
+
+  # Oil Products
+  sulfur:
+    components:
+      - component: water
+        quantity: 30
+      - component: petroleum-gas
+        quantity: 30
+    outputs:
+      - output: sulfur
+        quantity: 2
+  plastic-bar:
+    components:
+      - component: coal
+    outputs:
+      - output: plastic-bar
+        quantity: 2
+  sulfuric-acid:
+    components:
+      - component: iron-plate
+      - component: sulfur
+        quantity: 5
+    outputs:
+      - output: sulfuric-acid
+        quantity: 50
+
+  # Transport
+  pipe:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+  pipe-to-ground:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: pipe
+        quantity: 10
+    outputs:
+      - output: pipe-to-ground
+        quantity: 2
+
+  # Crafting items
+  wooden-chest:
+    craftingTime: 0.5
+    components:
+      - component: wood
+        quantity: 2
+  copper-cable:
+    name: Copper Cable
+    craftingTime: 0.5
+    components:
+      - component: copper-plate
+    outputs:
+      - output: copper-cable
+        quantity: 2
+
+  iron-gear-wheel:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+  iron-stick:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+        quantity: 3
+    outputs:
+      - output: iron-stick
+        quantity: 2
+  iron-chest:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+        quantity: 8
+  steel-chest:
+    components:
+      - component: steel-plate
+        quantity: 8
+  barrel:
+    components:
+      - component: steel-plate
+  electronic-circuit:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: copper-cable
+        quantity: 3
+  advanced-circuit:
+    craftingTime: 6
+    components:
+      - component: plastic-bar
+        quantity: 2
+      - component: copper-cable
+        quantity: 4
+      - component: electronic-circuit
+        quantity: 2
+  processing-unit:
+    craftingTime: 10
+    components:
+      - component: electronic-circuit
+        quantity: 20
+      - component: advanced-circuit
+        quantity: 2
+      - component: sulfuric-acid
+        quantity: 5
+  storage-tank:
+    craftingTime: 3
+    components:
+      - component: iron-plate
+        quantity: 20
+      - component: steel-plate
+        quantity: 5
+  burner-inserter:
+    components:
+      - component: iron-plate
+      - component: iron-gear-wheel
+
+  inserter:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: iron-gear-wheel
+      - component: electronic-circuit
+
+  filter-inserter:
+    craftingTime: 0.5
+    components:
+      - component: electronic-circuit
+        quantity: 4
+      - component: fast-inserter
+  long-handed-inserter:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: iron-gear-wheel
+      - component: inserter
+  fast-inserter:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+        quantity: 2
+      - component: electronic-circuit
+        quantity: 2
+      - component: inserter
+  stack-inserter:
+    craftingTime: 0.5
+    components:
+      - component: iron-gear-wheel
+        quantity: 15
+      - component: electronic-circuit
+        quantity: 15
+      - component: advanced-circuit
+      - component: inserter
+  stack-filter-inserter:
+    craftingTime: 0.5
+    components:
+      - component: electronic-circuit
+        quantity: 5
+      - component: stack-inserter
+
+  wall:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: iron-gear-wheel
+      - component: electronic-circuit
+  grenade:
+    craftingTime: 8
+    components:
+      - component: coal
+        quantity: 10
+      - component: iron-plate
+        quantity: 5
+  firearm-magazine:
+    components:
+      - component: iron-plate
+        quantity: 4
+  piercing-round-magazine:
+    components:
+      - component: steel-plate
+      - component: firearm-magazine
+      - component: copper-plate
+        quantity: 5
+  battery:
+    craftingTime: 4
+    components:
+      - component: iron-plate
+      - component: copper-plate
+      - component: sulfuric-acid
+        quantity: 20
+  accumulator:
+    name: Accumulator
+    craftingTime: 10
+    components:
+      - component: iron-plate
+        quantity: 2
+      - component: battery
+        quantity: 5
+  radar:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+        quantity: 10
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 5
+  solar-panel:
+    craftingTime: 10
+    components:
+      - component: copper-plate
+        quantity: 5
+      - component: steel-plate
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 15
+  engine-unit:
+    craftingTime: 10
+    components:
+      - component: steel-plate
+      - component: iron-gear-wheel
+      - component: pipe
+        quantity: 2
+  electric-engine-unit:
+    craftingTime: 10
+    components:
+      - component: engine-unit
+      - component: electronic-circuit
+        quantity: 2
+      - component: lubricant
+        quantity: 15
+  low-density-structure:
+    craftingTime: 20
+    components:
+      - component: copper-plate
+        quantity: 20
+      - component: steel-plate
+        quantity: 2
+      - component: plastic-bar
+        quantity: 5
+  flying-robot-frame:
+    craftingTime: 20
+    components:
+      - component: steel-plate
+      - component: battery
+        quantity: 2
+      - component: electronic-circuit
+        quantity: 3
+      - component: electric-engine-unit
+
+  # Transport
+  transport-belt:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+      - component: iron-gear-wheel
+    outputs:
+      - output: transport-belt
+        quantity: 2
+  fast-transport-belt:
+    craftingTime: 0.5
+    components:
+      - component: transport-belt
+      - component: iron-gear-wheel
+        quantity: 5
+  express-transport-belt:
+    craftingTime: 0.5
+    components:
+      - component: fast-transport-belt
+      - component: iron-gear-wheel
+        quantity: 10
+      - component: lubricant
+        quantity: 20
+
+  underground-belt:
+    components:
+      - component: iron-plate
+        quantity: 10
+      - component: transport-belt
+        quantity: 5
+    outputs:
+      - output: underground-belt
+        quantity: 2
+  fast-underground-belt:
+    components:
+      - component: iron-gear-wheel
+        quantity: 40
+      - component: underground-belt
+        quantity: 2
+    outputs:
+      - output: fast-underground-belt
+        quantity: 2
+  express-underground-belt:
+    components:
+      - component: iron-gear-wheel
+        quantity: 80
+      - component: fast-underground-belt
+        quantity: 2
+      - component: lubricant
+        quantity: 40
+    outputs:
+      - output: fast-underground-belt
+        quantity: 2
+  splitter:
+    components:
+      - component: iron-plate
+        quantity: 5
+      - component: transport-belt
+        quantity: 4
+      - component: electronic-circuit
+        quantity: 5
+  fast-splitter:
+    components:
+      - component: iron-gear-wheel
+        quantity: 10
+      - component: splitter
+      - component: electronic-circuit
+        quantity: 10
+  express-splitter:
+    components:
+      - component: iron-gear-wheel
+        quantity: 10
+      - component: advanced-circuit
+        quantity: 10
+      - component: fast-splitter
+      - component: lubricant
+        quantity: 80
+
+  # Modules
+  speed-module:
+    craftingTime: 15
+    components:
+      - component: electronic-circuit
+        quantity: 5
+      - component: advanced-circuit
+        quantity: 5
+  speed-module-2:
+    craftingTime: 30
+    components:
+      - component: advanced-circuit
+        quantity: 5
+      - component: processing-unit
+        quantity: 5
+      - component: speed-module
+        quantity: 4
+  speed-module-3:
+    craftingTime: 60
+    components:
+      - component: advanced-circuit
+        quantity: 5
+      - component: processing-unit
+        quantity: 5
+      - component: speed-module-2
+        quantity: 5
+
+  productivity-module:
+    craftingTime: 15
+    components:
+      - component: electronic-circuit
+        quantity: 5
+      - component: advanced-circuit
+        quantity: 5
+  productivity-module-2:
+    craftingTime: 30
+    components:
+      - component: advanced-circuit
+        quantity: 5
+      - component: processing-unit
+        quantity: 5
+      - component: productivity-module
+        quantity: 4
+  productivity-module-3:
+    craftingTime: 60
+    components:
+      - component: advanced-circuit
+        quantity: 5
+      - component: processing-unit
+        quantity: 5
+      - component: productivity-module-2
+        quantity: 5
+
+  efficiency-module:
+    craftingTime: 15
+    components:
+      - component: electronic-circuit
+        quantity: 5
+      - component: advanced-circuit
+        quantity: 5
+  efficiency-module-2:
+    craftingTime: 30
+    components:
+      - component: advanced-circuit
+        quantity: 5
+      - component: processing-unit
+        quantity: 5
+      - component: efficiency-module
+        quantity: 4
+  efficiency-module-3:
+    craftingTime: 60
+    components:
+      - component: advanced-circuit
+        quantity: 5
+      - component: processing-unit
+        quantity: 5
+      - component: efficiency-module-2
+        quantity: 5
+  # Machines
+  furnace:
+    craftingTime: 0.5
+    components:
+      - component: stone
+        quantity: 5
+  steel-furnace:
+    craftingTime: 3
+    components:
+      - component: steel-plate
+        quantity: 6
+      - component: stone-brick
+        quantity: 10
+  assembling-machine-1:
+    craftingTime: 0.5
+    components:
+      - component: iron-plate
+        quantity: 9
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 3
+  assembling-machine-2:
+    craftingTime: 0.5
+    components:
+      - component: assembling-machine-1
+      - component: steel-plate
+        quantity: 2
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 3
+  assembling-machine-3:
+    craftingTime: 0.5
+    components:
+      - component: assembling-machine-2
+      - component: speed-module
+  oil-refinery:
+    craftingTime: 8
+    components:
+      - component: steel-plate
+        quantity: 15
+      - component: iron-gear-wheel
+        quantity: 10
+      - component: electronic-circuit
+        quantity: 10
+      - component: pipe
+        quantity: 10
+      - component: stone-brick
+        quantity: 10
+
+  # Science Packs
+  automation-science-pack:
+    craftingTime: 5
+    components:
+      - component: copper-plate
+      - component: iron-gear-wheel
+  logistic-science-pack:
+    craftingTime: 6
+    components:
+      - component: transport-belt
+      - component: inserter
+  military-science-pack:
+    craftingTime: 10
+    components:
+      - component: piercing-round-magazine
+      - component: grenade
+      - component: wall
+        quantity: 2
+    outputs:
+      - output: military-science-pack
+        quantity: 2
+  utility-science-pack:
+    craftingTime: 21
+    components:
+      - component: processing-unit
+        quantity: 2
+      - component: flying-robot-frame
+        quantity: 1
+      - component: low-density-structure
+        quantity: 3
+    outputs:
+      - output: utility-science-pack
+        quantity: 3

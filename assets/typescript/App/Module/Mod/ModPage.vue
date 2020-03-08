@@ -48,7 +48,7 @@
         </v-card-actions>
         <v-divider v-if="!isCreate()"/>
         <v-card-text v-if="!isCreate()">
-          <product-table :api-searches="apiSearches" :headers="headers"/>
+          <item-table :api-searches="apiSearches" :headers="headers"/>
         </v-card-text>
       </v-form>
     </v-card>
@@ -57,28 +57,22 @@
 
 <script lang="ts">
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
-import ProductResource from '../../../_Common/Resource/ProductResource'
 import { snackbarModule } from '../../../_Common/Store'
 import { SnackbarEntry } from '../../../_Darkanakin41/Store/SnackbarModule'
 import RULES from '../../_config/rules'
-import ProductComponentField from '../../Component/ProductComponentField.vue'
-import ApiAutocomplete from '../../Component/ApiAutocomplete.vue'
 import ModResource from '../../../_Common/Resource/ModResource'
 import Mod, { newMod } from '../../../_Common/Model/Mod'
 import { TINYMCE_API_KEY } from '../../_config/configuration'
-import ProductTable from '../../Component/ProductTable.vue'
 import { DataTableHeader } from 'vuetify'
 import ApiSearch from '../../../_Darkanakin41/ApiPlatform/Model/ApiSearch'
+import ItemTable from '../../Component/ItemTable.vue'
 
 @Component({
-  components: { ProductTable, ApiAutocomplete, ProductComponentField }
+  components: { ItemTable }
 })
 export default class ModPage extends Vue {
   @Inject('modResource')
   modResource: ModResource
-
-  @Inject('productResource')
-  productResource: ProductResource
 
   @Prop({ default: null })
   id?: string
@@ -124,14 +118,6 @@ export default class ModPage extends Vue {
       value: 'utility'
     },
     {
-      text: 'Objet/Craft',
-      value: 'output'
-    },
-    {
-      text: 'Temps de Craft',
-      value: 'craftingTime'
-    },
-    {
       text: 'Détail',
       value: 'detail',
       sortable: false
@@ -155,7 +141,7 @@ export default class ModPage extends Vue {
   async loadData () {
     this.loading = true
     try {
-      if (this.id === null) {
+      if (!this.id) {
         this.mod = newMod()
       } else {
         this.mod = await this.modResource.getOne(this.id)
@@ -181,10 +167,10 @@ export default class ModPage extends Vue {
         icon: 'mdi-check'
       }
 
-      if (this.mod.id) {
+      if (this.mod && this.mod.id) {
         this.mod = await this.modResource.patch(this.mod.id, this.mod)
         snackback.title = 'La modification du produit à bien été effectuée'
-      } else {
+      } else if (this.mod){
         this.mod = await this.modResource.post(this.mod)
         snackback.title = 'L\'ajout du produit à bien été effectué'
         await this.$router.push({ name: 'mod-edit', params: { id: this.mod.id } })

@@ -1,0 +1,41 @@
+recipes:
+  # FactorioExtended Plus-Core
+  titanium-ore:
+    craftingTime: 5
+    mod: factorio-extended-plus-core
+    components:
+      - component: iron-ore
+        quantity: 2
+      - component: sulfuric-acid
+        quantity: 5
+      - component: water
+        quantity: 2
+  titanium-plate:
+    craftingTime: 5
+    mod: factorio-extended-plus-core
+    components:
+      - component: titanium-ore
+  pollution-filter:
+    craftingTime: .5
+    mod: factorio-extended-plus-core
+    components:
+      - component: steel-plate
+      - component: electronic-circuit
+      - component: plastic-bar
+        quantity: 5
+
+#  TODO ADD CRAFTING TIME
+  repair-pack-mk2:
+    mod: factorio-extended-plus-core
+    components:
+      - component: iron-gear-wheel
+      - component: advanced-circuit
+      - component: repair-pack
+        quantity: 2
+  repair-pack-mk3:
+    mod: factorio-extended-plus-core
+    components:
+      - component: iron-gear-wheel
+      - component: advanced-circuit
+      - component: repair-pack-mk2
+        quantity: 2

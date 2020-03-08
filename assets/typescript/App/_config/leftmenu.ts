@@ -6,8 +6,14 @@ let routes:any[] = [
         exact: true,
     },
     {
-        label: 'Produits',
-        name: 'product-index',
+        label: 'Objets',
+        name: 'item-index',
+        icon: 'fa fa-box',
+        exact: true,
+    },
+    {
+        label: 'Recettes',
+        name: 'recipe-index',
         icon: 'fa fa-cubes',
         exact: true,
     },

@@ -1,0 +1,39 @@
+items:
+  # FactorioExtended Plus-Transport
+  rapid-transport-belt-mk1:
+    name: Rapid Transport Belt MK1
+    utility: transport
+    itemPerSecond: 60
+    mod: factorio-extended-plus-transport
+  rapid-transport-belt-mk2:
+    name: Rapid Transport Belt MK2
+    utility: transport
+    itemPerSecond: 60
+    mod: factorio-extended-plus-transport
+  fast-inserter-mk2:
+    name: Fast Inserter MK2
+    mod: factorio-extended-plus-transport
+  fast-inserter-mk3:
+    name: Fast Inserter MK3
+    mod: factorio-extended-plus-transport
+  fast-long-handed-inserter:
+    name: Fast Long Handed Inserter
+    mod: factorio-extended-plus-transport
+  filter-long-handed-inserter:
+    name: Filter Long Handed Inserter
+    mod: factorio-extended-plus-transport
+  stack-inserter-mk2:
+    name: Stack Inserter MK2
+    mod: factorio-extended-plus-transport
+  stack-filter-inserter-mk2:
+    name: Stack Filter Inserter MK2
+    mod: factorio-extended-plus-transport
+  pipe-mk2:
+    name: Pipe MK2
+    mod: factorio-extended-plus-transport
+  pipe-to-ground-mk2:
+    name: Pipe To Ground MK2
+    mod: factorio-extended-plus-transport
+  storage-tank-mk2:
+    name: Storage Tank MK2
+    mod: factorio-extended-plus-transport

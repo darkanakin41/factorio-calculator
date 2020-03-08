@@ -3,14 +3,12 @@
     <v-card>
       <v-sheet>
         <v-toolbar dark>
-          <form v-on:submit.prevent="getData()">
-            <v-text-field v-model="search"
-                          append-icon="search"
-                          label="Rechercher"
-                          single-line
-                          hide-details
-            />
-          </form>
+          <v-text-field v-model="search"
+                        append-icon="search"
+                        label="Rechercher"
+                        single-line
+                        hide-details
+          />
           <v-spacer/>
           <v-toolbar-items>
             <v-btn :to="{name:'mod-create'}">Créer</v-btn>
@@ -47,17 +45,15 @@
 import { Component, Inject, Vue, Watch } from 'vue-property-decorator'
 import Loading from '../../../_Darkanakin41/Component/Loading.vue'
 import ErrorManager from '../../../_Darkanakin41/Component/Form/ErrorManager.vue'
-import Product from '../../../_Common/Model/Product'
-import ProductResource from '../../../_Common/Resource/ProductResource'
 import { DataOptions, DataTableHeader } from 'vuetify'
 import ApiSort from '../../../_Darkanakin41/ApiPlatform/Model/ApiSort'
 import ApiSearch from '../../../_Darkanakin41/ApiPlatform/Model/ApiSearch'
-import { PRODUCT_TYPE, PRODUCT_UTILITY } from '../../../_Common/Nomenclature'
 import Mod from '../../../_Common/Model/Mod'
 import ModResource from '../../../_Common/Resource/ModResource'
+import debounce from 'lodash/debounce'
 
 @Component({
-  components: {Loading, ErrorManager }
+  components: { Loading, ErrorManager }
 })
 export default class IndexPage extends Vue {
   @Inject('modResource')
@@ -122,6 +118,9 @@ export default class IndexPage extends Vue {
     return search
   }
 
+  @Watch('search')
+  recipeSearchUpdate = debounce(this.getData, 500)
+
   @Watch('options.page')
   @Watch('options.itemsPerPage')
   @Watch('apiSort')
@@ -138,13 +137,6 @@ export default class IndexPage extends Vue {
       this.itemsCount = res.$hydra['hydra:totalItems']
     } finally {
       this.loading = false
-    }
-  }
-
-  @Watch('selected')
-  onSelectedUpdate (newSelected, oldSelected) {
-    if (newSelected === undefined && oldSelected !== undefined) {
-      this.getData()
     }
   }
 }

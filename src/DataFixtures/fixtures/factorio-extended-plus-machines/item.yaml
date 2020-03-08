@@ -1,0 +1,12 @@
+items:
+  # FactorioExtended Plus-Machine
+  assembling-machine-4:
+    name: Assembling Machine 4
+    utility: machine
+    craftingSpeed: 2
+    mod: factorio-extended-plus-machines
+  assembling-machine-5:
+    name: Assembling Machine 5
+    utility: machine
+    craftingSpeed: 3
+    mod: factorio-extended-plus-machines

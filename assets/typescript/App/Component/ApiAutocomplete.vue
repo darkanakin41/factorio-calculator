@@ -15,8 +15,9 @@
 
 
 <script lang="ts">
-import { Component, Model, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import AbstractApiResource from '../../_Darkanakin41/ApiPlatform/Resource/AbstractApiResource'
+import debounce from 'lodash/debounce'
 
 @Component({})
 export default class ApiAutocomplete extends Vue {
@@ -47,20 +48,20 @@ export default class ApiAutocomplete extends Vue {
     if (typeof this.item === 'string') {
       let valueSplit = this.item.split('/')
       let id = valueSplit[valueSplit.length - 1]
-      this.item = await this.resource.getOne(id)
-    } else {
-      this.item = this.selected
+      this.selected = await this.resource.getOne(id)
     }
     this.loading = false
   }
 
   updateValue($event){
-    this.$emit('update:item', $event)
+    this.$emit('update:input', $event)
   }
 
 
   @Watch('search')
-  async loadProducts () {
+  recipeSearchUpdate = debounce(this.loadData, 500)
+
+  async loadData () {
     this.loading = true
     if (this.search === '') {
       this.items = []

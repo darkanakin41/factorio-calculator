@@ -83,7 +83,7 @@
     const namespace: string = 'security';
 
     @Component({
-        // components: {Card}
+        // outputs: {Card}
     })
     export default class LeftMenu extends Vue {
         // authStore: AuthStore;

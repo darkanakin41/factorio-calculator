@@ -1,0 +1,95 @@
+recipes:
+  rapid-transport-belt-mk1:
+    craftingTime: 0.5
+    mod: factorio-extended-plus-transport
+    components:
+      - component: express-transport-belt
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: lubricant
+        quantity: 2
+  rapid-transport-belt-mk2:
+    craftingTime: 0.5
+    mod: factorio-extended-plus-transport
+    components:
+      - component: rapid-transport-belt-mk1
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: lubricant
+        quantity: 2
+
+
+  #  TODO ADD CRAFTING TIME
+  fast-inserter-mk2:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: fast-inserter
+      - component: advanced-circuit
+        quantity: 5
+      - component: speed-module
+        quantity: 2
+  fast-inserter-mk3:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: fast-inserter-mk2
+      - component: processing-unit
+        quantity: 5
+      - component: speed-module-2
+        quantity: 2
+  fast-long-handed-inserter:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: fast-inserter
+      - component: long-handed-inserter
+      - component: steel-plate
+        quantity: 2
+  filter-long-handed-inserter:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: fast-long-handed-inserter
+      - component: filter-inserter
+      - component: steel-plate
+        quantity: 2
+  stack-inserter-mk2:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: stack-inserter
+        quantity: 2
+      - component: processing-unit
+        quantity: 15
+      - component: speed-module
+  stack-filter-inserter-mk2:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: stack-filter-inserter
+        quantity: 2
+      - component: processing-unit
+        quantity: 15
+      - component: speed-module
+  pipe-mk2:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: titanium-plate
+  pipe-to-ground-mk2:
+    mod: factorio-extended-plus-transport
+    craftingTime: .5
+    components:
+      - component: pipe-mk2
+        quantity: 20
+      - component: titanium-plate
+        quantity: 10
+  storage-tank-mk2:
+    mod: factorio-extended-plus-transport
+    craftingTime: 3
+    components:
+      - component: storage-tank
+        quantity: 4
+      - component: titanium-plate
+        quantity: 15

@@ -1,0 +1,86 @@
+recipes:
+
+  # FactorioExtended Plus-Module
+  speed-module-4:
+    name: Speed Module 4
+    craftingTime: 120
+    mod: factorio-extended-plus-module
+    components:
+      - component: speed-module-3
+        quantity: 6
+      - component: processing-unit
+        quantity: 10
+  speed-module-5:
+    name: Speed Module 5
+    craftingTime: 240
+    mod: factorio-extended-plus-module
+    components:
+      - component: speed-module-4
+        quantity: 4
+      - component: processing-unit
+        quantity: 10
+  speed-module-6:
+    name: Speed Module 6
+    craftingTime: 480
+    mod: factorio-extended-plus-module
+    components:
+      - component: speed-module-5
+        quantity: 4
+      - component: processing-unit
+        quantity: 10
+
+  productivity-module-4:
+    name: Productivity Module 4
+    craftingTime: 120
+    mod: factorio-extended-plus-module
+    components:
+      - component: productivity-module-3
+        quantity: 6
+      - component: processing-unit
+        quantity: 10
+  productivity-module-5:
+    name: Productivity Module 5
+    craftingTime: 240
+    mod: factorio-extended-plus-module
+    components:
+      - component: productivity-module-4
+        quantity: 4
+      - component: processing-unit
+        quantity: 10
+  productivity-module-6:
+    name: Productivity Module 6
+    craftingTime: 480
+    mod: factorio-extended-plus-module
+    components:
+      - component: productivity-module-5
+        quantity: 4
+      - component: processing-unit
+        quantity: 10
+
+  efficiency-module-4:
+    name: Efficiency Module 4
+    craftingTime: 120
+    mod: factorio-extended-plus-module
+    components:
+      - component: efficiency-module-3
+        quantity: 6
+      - component: processing-unit
+        quantity: 10
+  efficiency-module-5:
+    name: Efficiency Module 5
+    craftingTime: 240
+    mod: factorio-extended-plus-module
+    components:
+      - component: efficiency-module-4
+        quantity: 4
+      - component: processing-unit
+        quantity: 10
+  efficiency-module-6:
+    name: Efficiency Module 6
+    craftingTime: 480
+    mod: factorio-extended-plus-module
+    components:
+      - component: efficiency-module-5
+        quantity: 4
+      - component: processing-unit
+        quantity: 10

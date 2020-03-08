@@ -1,0 +1,238 @@
+items:
+  wood:
+    name: Wood
+  iron-ore:
+    name: Iron Ore
+  copper-ore:
+    name: Copper Ore
+  coal:
+    name: Coal
+  stone:
+    name: Stone
+  iron-plate:
+    name: Iron Plate
+  copper-plate:
+    name: Copper Plate
+  steel-plate:
+    name: Steel Plate
+  stone-brick:
+    name: Stone Brick
+  wooden-chest:
+    name: Wooden Chest
+  copper-cable:
+    name: Copper Cable
+  iron-gear-wheel:
+    name: Iron Gear Wheel
+  iron-stick:
+    name: Iron Stick
+  iron-chest:
+    name: Iron Chest
+  steel-chest:
+    name: Steel Chest
+  barrel:
+    name: Barrel
+  electronic-circuit:
+    name: Electronic Circuit
+  advanced-circuit:
+    name: Advanced Circuit
+  processing-unit:
+    name: Processing Unit
+  burner-inserter:
+    name: Burner Inserter
+  inserter:
+    name: Inserter
+  filter-inserter:
+    name: Filter Inserter
+  long-handed-inserter:
+    name: Long Handed Inserter
+  fast-inserter:
+    name: Fast Inserter
+  stack-inserter:
+    name: Stack Inserter
+  stack-filter-inserter:
+    name: Stack Filter Inserter
+  wall:
+    name: Wall
+  grenade:
+    name: Grenade
+  firearm-magazine:
+    name: Firearm Magazine
+  piercing-round-magazine:
+    name: Piercing Rounds Magazine
+  battery:
+    name: Battery
+  accumulator:
+    name: Accumulator
+  radar:
+    name: Radar
+  solar-panel:
+    name: Solar Panel
+  engine-unit:
+    name: Engine Unit
+  electric-engine-unit:
+    name: Electric Engine Unit
+  low-density-structure:
+    name: Low Density Structure
+  flying-robot-frame:
+    name: Flying Robot Frame
+  repair-pack:
+    name: Repair Pack
+  storage-tank:
+    name: Storage Tank
+  # Transport
+  transport-belt:
+    name: Transport Belt
+    utility: transport
+    itemPerSecond: 15
+  fast-transport-belt:
+    name: Fast Transport Belt
+    utility: transport
+    itemPerSecond: 30
+  express-transport-belt:
+    name: Express Transport Belt
+    utility: transport
+    itemPerSecond: 45
+
+  underground-belt:
+    name: Underground Belt
+    utility: transport
+    itemPerSecond: 15
+  fast-underground-belt:
+    name: Fast Underground Belt
+    utility: transport
+    itemPerSecond: 30
+  express-underground-belt:
+    name: Express Underground Belt
+    utility: transport
+    itemPerSecond: 45
+
+  splitter:
+    name: Splitter
+    utility: transport
+    itemPerSecond: 15
+  fast-splitter:
+    name: Fast Splitter
+    utility: transport
+    itemPerSecond: 30
+  express-splitter:
+    name: Express Splitter
+    utility: transport
+    itemPerSecond: 45
+
+  pipe:
+    name: Pipe
+    utility: transport
+  pipe-to-ground:
+    name: Pipe to ground
+    utility: transport
+
+  # Speed Modules
+  speed-module:
+    name: Speed Module
+    utility: module-speed
+    energyConsumption: 0.5
+    speed: 0.2
+  speed-module-2:
+    name: Speed Module 2
+    utility: module-speed
+    energyConsumption: 0.6
+    speed: 0.3
+  speed-module-3:
+    name: Speed Module 3
+    utility: module-speed
+    energyConsumption: 0.7
+    speed: 0.5
+
+  # Productivity Modules
+  productivity-module:
+    name: Productivity Module
+    utility: module-productivity
+    energyConsumption: 0.4
+    speed: -0.15
+    polution: 0.05
+    productivity: 0.04
+  productivity-module-2:
+    name: Productivity Module 2
+    utility: module-productivity
+    energyConsumption: 0.6
+    speed: -0.15
+    polution: 0.07
+    productivity: 0.06
+  productivity-module-3:
+    name: Productivity Module 3
+    utility: module-productivity
+    energyConsumption: 0.8
+    speed: -0.15
+    polution: 0.1
+    productivity: 0.1
+
+  # Efficiency Modules
+  efficiency-module:
+    name: Efficiency Module
+    utility: module-efficiency
+    energyConsumption: -0.4
+    polution: -0.2
+  efficiency-module-2:
+    name: Efficiency Module 2
+    utility: module-efficiency
+    energyConsumption: -0.6
+    polution: -0.3
+  efficiency-module-3:
+    name: Efficiency Module 3
+    utility: module-efficiency
+    energyConsumption: -1
+    polution: -0.5
+
+  # Machines
+  furnace:
+    name: Furnace
+    utility: machine
+    craftingSpeed: 1
+  steel-furnace:
+    name: Steel Furnace
+    utility: machine
+    craftingSpeed: 2
+  assembling-machine-1:
+    name: Assembling Machine 1
+    utility: machine
+    craftingSpeed: 0.5
+  assembling-machine-2:
+    name: Assembling Machine 2
+    utility: machine
+    craftingSpeed: 0.75
+  assembling-machine-3:
+    name: Assembling Machine 3
+    utility: machine
+    craftingSpeed: 1.25
+  oil-refinery:
+    name: Oil Refinery
+    utility: machine
+    craftingSpeed: 1
+
+  # Science Packs
+  automation-science-pack:
+    name: Automation Science Pack
+  logistic-science-pack:
+    name: Logistic Science Pack
+  military-science-pack:
+    name: Military Science Pack
+  utility-science-pack:
+    name: Utility Science Pack
+
+  # fluids
+  petroleum-gas:
+    name: Petroleum Gas
+    type: fluid
+  lubricant:
+    name: Lubricant
+    type: fluid
+  sulfur:
+    name: sulfur
+  plastic-bar:
+    name: Plastic Bar
+  sulfuric-acid:
+    name: Sulfuric Acid
+    type: fluid
+  water:
+    name: Water
+    type: fluid

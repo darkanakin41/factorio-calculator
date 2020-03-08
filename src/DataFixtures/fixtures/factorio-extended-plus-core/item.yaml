@@ -1,0 +1,17 @@
+items:
+  # FactorioExtended Plus-Core
+  titanium-ore:
+    name: Titanium Ore
+    mod: factorio-extended-plus-core
+  titanium-plate:
+    name: Titanium Plate
+    mod: factorio-extended-plus-core
+  pollution-filter:
+    name: Pollution Filter
+    mod: factorio-extended-plus-core
+  repair-pack-mk2:
+    name: Repair Pack MK2
+    mod: factorio-extended-plus-core
+  repair-pack-mk3:
+    name: Repair Pack MK3
+    mod: factorio-extended-plus-core

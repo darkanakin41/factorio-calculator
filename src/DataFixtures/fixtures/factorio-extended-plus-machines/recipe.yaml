@@ -1,0 +1,21 @@
+recipes:
+  # FactorioExtended Plus-Machine
+  assembling-machine-4:
+    craftingTime: 2.5
+    mod: factorio-extended-plus-machines
+    components:
+      - component: assembling-machine-3
+      - component: pollution-filter
+      - component: speed-module
+        quantity: 2
+  assembling-machine-5:
+    craftingTime: 5
+    mod: factorio-extended-plus-machines
+    components:
+      - component: assembling-machine-4
+        quantity: 2
+      - component: pollution-filter
+      - component: speed-module-2
+        quantity: 2
+      - component: efficiency-module-2
+        quantity: 2

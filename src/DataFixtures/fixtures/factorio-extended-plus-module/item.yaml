@@ -1,0 +1,63 @@
+items:
+  speed-module-4:
+    name: Speed Module 4
+    utility: module-speed
+    energyConsumption: 0.8
+    speed: 0.8
+    mod: factorio-extended-plus-module
+  speed-module-5:
+    name: Speed Module 5
+    utility: module-speed
+    energyConsumption: 0.9
+    speed: 1.2
+    mod: factorio-extended-plus-module
+  speed-module-6:
+    name: Speed Module 6
+    utility: module-speed
+    energyConsumption: 1
+    speed: 1.7
+    mod: factorio-extended-plus-module
+
+  productivity-module-4:
+    name: Productivity Module 4
+    utility: module-productivity
+    energyConsumption: 1
+    speed: -0.15
+    polution: 0.14
+    productivity: 0.16
+    mod: factorio-extended-plus-module
+  productivity-module-5:
+    name: Productivity Module 5
+    utility: module-productivity
+    energyConsumption: 1.2
+    speed: -0.15
+    polution: 0.19
+    productivity: 0.24
+    mod: factorio-extended-plus-module
+  productivity-module-6:
+    name: Productivity Module 6
+    utility: module-productivity
+    energyConsumption: 1.4
+    speed: -0.15
+    polution: 0.25
+    productivity: 0.34
+    mod: factorio-extended-plus-module
+
+  efficiency-module-4:
+    name: Efficiency Module 4
+    utility: module-efficiency
+    energyConsumption: -1.6
+    polution: -0.8
+    mod: factorio-extended-plus-module
+  efficiency-module-5:
+    name: Efficiency Module 5
+    utility: module-efficiency
+    energyConsumption: -2.4
+    polution: -1.2
+    mod: factorio-extended-plus-module
+  efficiency-module-6:
+    name: Efficiency Module 6
+    utility: module-efficiency
+    energyConsumption: -3.4
+    polution: -1.7
+    mod: factorio-extended-plus-module
