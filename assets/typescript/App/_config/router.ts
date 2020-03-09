@@ -13,7 +13,7 @@ const baseRoutes: Array<RouteConfig> = []
 const routes: Array<RouteConfig> = baseRoutes.concat(indexRoute, itemRoute, modRoute, recipeRoute,
   [{
     path: '*',
-    redirect: 'item-index'
+    redirect: 'calculate'
   }]
 )
 
