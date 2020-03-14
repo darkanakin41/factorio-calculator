@@ -23,7 +23,7 @@ const options = {
     themes: {
         dark: {
             primary: primaryColor,
-            secondary: "#515151",
+            secondary: secondaryColor,
         }
     },
 };

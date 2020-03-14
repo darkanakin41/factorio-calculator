@@ -1,5 +1,6 @@
 <template>
     <div>
+        <user-card />
         <v-list>
             <template v-for="item in menuItems">
                 <template v-if="item.children === undefined && isAuthorized(item)">
@@ -14,7 +15,7 @@
                             </v-list-item-content>
                         </v-list-item>
                     </template>
-                    <template v-else-if="item.name !== undefined" >
+                    <template v-else-if="item.name !== undefined">
                         <v-list-item :to="{name: item.name}" :exact="item.exact === true">
                             <v-list-item-action>
                                 <v-icon v-if="item.icon !== undefined">{{ item.icon }}</v-icon>
@@ -79,10 +80,14 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import routes from "../_config/leftmenu";
+    import {authModule} from "../../_Common/Store";
+    import UserCard from "../Component/UserCard.vue";
 
     const namespace: string = 'security';
 
     @Component({
+        components: {UserCard}
+
         // outputs: {Card}
     })
     export default class LeftMenu extends Vue {
@@ -97,22 +102,24 @@
             }
         }
 
-        isAuthorized(item:any){
-        //     if(authStore.payload === null){
-        //         return false;
-        //     }
-        //
-        //     let authorized = false;
-        //     if(item.roles === undefined){
-        //         return true;
-        //     }
-        //     item.roles.forEach((i) => {
-        //         if(authStore.payload.roles.indexOf(i) !== -1){
-        //             authorized = true;
-        //         }
-        //     });
-        //     return authorized;
-            return true;
+        isAuthorized(item: any) {
+            if (item.loggedIn === false && authModule.user) {
+                return false
+            }
+            if (item.loggedIn && !authModule.user) {
+                return false
+            }
+
+            let authorized = false;
+            if (!item.roles) {
+                return true;
+            }
+            item.roles.forEach((i) => {
+                if (authModule.user && authModule.user.roles !== null && authModule.user.roles.indexOf(i) !== -1) {
+                    authorized = true;
+                }
+            });
+            return authorized;
         }
     }
 </script>

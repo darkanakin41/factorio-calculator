@@ -2,20 +2,35 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use FOS\UserBundle\Model\UserInterface;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"user", "user:read"}},
- *     denormalizationContext={"groups"={"user", "user:write"}}
+ *     denormalizationContext={"groups"={"user", "user:write"}},
+ *     attributes={"security"="is_granted('ROLE_USER')"},
+ *     collectionOperations={
+ *         "get",
+ *         "post"={"security"="is_granted('ROLE_ADMIN')"}
+ *     },
+ *     itemOperations={
+ *         "get",
+ *         "put"={"security"="is_granted('ROLE_ADMIN') or object == user"},
+ *         "delete"={"security"="is_granted('ROLE_ADMIN') or object == user"},
+ *     }
  * )
+ * @ApiFilter(PropertyFilter::class, arguments={"parameterName": "props" })
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "username": "exact"})
  */
 class User extends BaseUser
 {
