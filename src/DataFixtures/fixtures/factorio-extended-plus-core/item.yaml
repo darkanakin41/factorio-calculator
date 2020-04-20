@@ -3,8 +3,8 @@ items:
   titanium-ore:
     name: Titanium Ore
     mod: factorio-extended-plus-core
-  titanium-plate:
-    name: Titanium Plate
+  titanium-alloy:
+    name: Titanium Alloy
     mod: factorio-extended-plus-core
   pollution-filter:
     name: Pollution Filter

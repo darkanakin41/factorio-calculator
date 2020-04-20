@@ -78,4 +78,33 @@ class User extends BaseUser
     {
         return $user instanceof self && $user->id === $this->id;
     }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername($username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

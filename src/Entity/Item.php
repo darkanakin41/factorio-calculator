@@ -50,6 +50,13 @@ class Item
     private $name;
 
     /**
+     * @var string $slug The slug of the item
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"component:read", "item:read"})
+     */
+    private $slug;
+
+    /**
      * The type of the item
      *
      * In most case :
@@ -173,6 +180,16 @@ class Item
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getType(): ?string

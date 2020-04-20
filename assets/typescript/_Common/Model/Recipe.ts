@@ -5,7 +5,7 @@ export default class Recipe extends IdData<string> {
   name: string
   craftingTime: number
 
-  mod?: Mod
+  mod: Mod | null
 }
 
 

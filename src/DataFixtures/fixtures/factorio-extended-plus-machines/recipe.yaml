@@ -1,5 +1,39 @@
 recipes:
-  # FactorioExtended Plus-Machine
+  radar-mk2:
+    craftingTime: .5
+    mod: factorio-extended-plus-machines
+    components:
+      - component: radar
+      - component: advanced-circuit
+        quantity: 25
+      - component: steel-plate
+        quantity: 50
+  electric-furnace-mk2:
+    craftingTime: 5
+    mod: factorio-extended-plus-machines
+    components:
+      - component: electric-furnace
+      - component: steel-plate
+        quantity: 10
+      - component: speed-module
+        quantity: 2
+      - component: advanced-circuit
+        quantity: 10
+      - component: pollution-filter
+        quantity: 1
+  electric-furnace-mk3:
+    craftingTime: 5
+    mod: factorio-extended-plus-machines
+    components:
+      - component: electric-furnace-mk2
+      - component: titanium-alloy
+        quantity: 20
+      - component: efficiency-module-2
+        quantity: 2
+      - component: processing-unit
+        quantity: 5
+      - component: pollution-filter
+        quantity: 1
   assembling-machine-4:
     craftingTime: 2.5
     mod: factorio-extended-plus-machines
@@ -19,3 +53,132 @@ recipes:
         quantity: 2
       - component: efficiency-module-2
         quantity: 2
+  oil-refinery-mk2:
+    craftingTime: 20
+    mod: factorio-extended-plus-machines
+    components:
+      - component: oil-refinery
+      - component: pollution-filter
+      - component: speed-module
+        quantity: 2
+      - component: advanced-circuit
+        quantity: 10
+  oil-refinery-mk3:
+    craftingTime: 20
+    mod: factorio-extended-plus-machines
+    components:
+      - component: oil-refinery-mk2
+      - component: pollution-filter
+      - component: titanium-alloy
+        quantity: 25
+      - component: speed-module-2
+        quantity: 2
+      - component: efficiency-module-2
+        quantity: 2
+      - component: processing-unit
+        quantity: 5
+  chemical-plant-mk2:
+    craftingTime: 10
+    mod: factorio-extended-plus-machines
+    components:
+      - component: chemical-plant
+      - component: pollution-filter
+      - component: speed-module
+        quantity: 2
+      - component: advanced-circuit
+        quantity: 10
+  chemical-plant-mk3:
+    craftingTime: 10
+    mod: factorio-extended-plus-machines
+    components:
+      - component: chemical-plant-mk2
+      - component: pollution-filter
+      - component: titanium-alloy
+        quantity: 25
+      - component: speed-module-2
+        quantity: 2
+      - component: efficiency-module-2
+        quantity: 2
+      - component: processing-unit
+        quantity: 5
+  electric-mining-drill-mk2:
+    craftingTime: 2
+    mod: factorio-extended-plus-machines
+    components:
+      - component: electric-mining-drill
+      - component: pollution-filter
+      - component: steel-plate
+        quantity: 10
+      - component: speed-module
+        quantity: 2
+      - component: efficiency-module
+        quantity: 2
+  electric-mining-drill-mk3:
+    craftingTime: 4
+    mod: factorio-extended-plus-machines
+    components:
+      - component: electric-mining-drill-mk2
+      - component: pollution-filter
+        quantity: 4
+      - component: titanium-alloy
+        quantity: 10
+      - component: speed-module-2
+        quantity: 2
+      - component: efficiency-module-2
+        quantity: 2
+      - component: processing-unit
+        quantity: 3
+  pumpjack-mk2:
+    craftingTime: 2
+    mod: factorio-extended-plus-machines
+    components:
+      - component: pumpjack
+      - component: steel-plate
+        quantity: 15
+      - component: advanced-circuit
+        quantity: 10
+      - component: pipe
+        quantity: 10
+  centrifuge-mk2:
+    craftingTime: 4
+    mod: factorio-extended-plus-machines
+    components:
+      - component: centrifuge
+      - component: concrete
+        quantity: 100
+      - component: titanium-alloy
+        quantity: 50
+      - component: advanced-circuit
+        quantity: 100
+  centrifuge-mk3:
+    craftingTime: 4
+    mod: factorio-extended-plus-machines
+    components:
+      - component: centrifuge-mk2
+      - component: concrete
+        quantity: 100
+      - component: titanium-alloy
+        quantity: 50
+      - component: advanced-circuit
+        quantity: 100
+  lab-mk2:
+    craftingTime: 4
+    mod: factorio-extended-plus-machines
+    components:
+      - component: lab
+      - component: titanium-alloy
+        quantity: 50
+      - component: advanced-circuit
+        quantity: 50
+  lab-mk3:
+    craftingTime: 8
+    mod: factorio-extended-plus-machines
+    components:
+      - component: lab-mk2
+        quantity: 2
+      - component: concrete
+        quantity: 50
+      - component: titanium-alloy
+        quantity: 100
+      - component: processing-unit
+        quantity: 50

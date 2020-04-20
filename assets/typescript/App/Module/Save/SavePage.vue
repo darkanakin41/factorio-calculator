@@ -81,7 +81,7 @@
     @Component({
         components: {RecipeOutputField, RecipeComponentField, ApiAutocomplete}
     })
-    export default class ModPage extends Vue {
+    export default class SavePage extends Vue {
         @Inject('modResource')
         modResource: ModResource
 

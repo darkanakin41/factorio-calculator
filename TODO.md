@@ -5,7 +5,7 @@
 * [X] Ajouter la gestion de Mods
 * [ ] Ajouter la gestion de Sauvegarde (1 sauvegarde = Factorio de base + n Modpacks)
 * [ ] Relier la sauvegarde à une liste de Products
-* [ ] Ajouter la gestion d'utilisateurs
+* [X] Ajouter la gestion d'utilisateurs
 * [ ] Ajouter les autorisations par actions (ADMIN : Mods + Utilisateurs + Produits de bases)
 
 # Frontend

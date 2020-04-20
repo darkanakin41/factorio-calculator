@@ -24,6 +24,12 @@ let routes:any[] = [
         exact: true,
     },
     {
+        label: 'Sauvegardes',
+        name: 'save-index',
+        icon: 'far fa-save',
+        exact: true,
+    },
+    {
         label: 'Connexion',
         name: 'security-sign-in',
         icon: 'fa fa-sign-in-alt',

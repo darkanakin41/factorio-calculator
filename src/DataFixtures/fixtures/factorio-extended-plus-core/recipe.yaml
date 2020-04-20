@@ -10,7 +10,7 @@ recipes:
         quantity: 5
       - component: water
         quantity: 2
-  titanium-plate:
+  titanium-alloy:
     craftingTime: 5
     mod: factorio-extended-plus-core
     components:

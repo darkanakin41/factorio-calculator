@@ -1,5 +1,46 @@
 items:
-  # FactorioExtended Plus-Machine
+  radar-mk2:
+    name: Radar MK2
+    mod: factorio-extended-plus-machines
+  pumpjack-mk2:
+    name: Pumpjack MK2
+    mod: factorio-extended-plus-machines
+  lab-mk2:
+    name: Lab MK2
+    mod: factorio-extended-plus-machines
+  lab-mk3:
+    name: Lab MK3
+    mod: factorio-extended-plus-machines
+  electric-furnace-mk2:
+    name: Electric Furnace MK2
+    utility: machine
+    craftingSpeed: 3
+    mod: factorio-extended-plus-machines
+  electric-furnace-mk3:
+    name: Electric Furnace MK3
+    utility: machine
+    craftingSpeed: 4
+    mod: factorio-extended-plus-machines
+  oil-refinery-mk2:
+    name: Oil Refinery MK2
+    utility: machine
+    craftingSpeed: 2
+    mod: factorio-extended-plus-machines
+  oil-refinery-mk3:
+    name: Oil Refinery MK3
+    utility: machine
+    craftingSpeed: 4
+    mod: factorio-extended-plus-machines
+  chemical-plant-mk2:
+    name: Chemical Plant MK2
+    utility: machine
+    craftingSpeed: 2
+    mod: factorio-extended-plus-machines
+  chemical-plant-mk3:
+    name: Chemical Plant MK3
+    utility: machine
+    craftingSpeed: 4
+    mod: factorio-extended-plus-machines
   assembling-machine-4:
     name: Assembling Machine 4
     utility: machine
@@ -9,4 +50,20 @@ items:
     name: Assembling Machine 5
     utility: machine
     craftingSpeed: 3
+    mod: factorio-extended-plus-machines
+  centrifuge-mk2:
+    name: Centrifuge MK2
+    utility: machine
+    craftingSpeed: 1.5
+    mod: factorio-extended-plus-machines
+  centrifuge-mk3:
+    name: Centrifuge MK3
+    utility: machine
+    craftingSpeed: 3
+    mod: factorio-extended-plus-machines
+  electric-mining-drill-mk2:
+    name: Electric Mining Drill MK2
+    mod: factorio-extended-plus-machines
+  electric-mining-drill-mk3:
+    name: Electric Mining Drill MK3
     mod: factorio-extended-plus-machines

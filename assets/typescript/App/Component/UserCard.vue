@@ -10,9 +10,10 @@
             </div>
             <div class="user">
                 <v-avatar :size="90" color="primary">
-                <span class="white--text headline">
-                    {{ user.username.substr(0,1).toUpperCase() }}
-                </span>
+                    <span class="white--text headline" v-if="avatar === null">
+                        {{ user.username.substr(0,1).toUpperCase() }}
+                    </span>
+                    <v-img :src="avatar" :alt="user.username" />
                 </v-avatar>
                 <div class="id">
                     <span class="pseudo">{{ user.username }}</span>
@@ -32,6 +33,7 @@
     import {authModule} from "../../_Common/Store";
     import UserResource from "../../_Common/Resource/UserResource";
     import User from "../../_Common/Model/User";
+    import * as crypto from 'crypto';
 
     @Component({
         components: {}
@@ -56,6 +58,14 @@
                 this.user = users[0]
             }
             this.loading = false
+        }
+
+        get avatar() {
+            if (!this.user || !this.user.email) {
+                return null
+            }
+            let md5 = crypto.createHash('md5').update(this.user.email).digest("hex");
+            return `https://www.gravatar.com/avatar/${md5}?s=90`
         }
     }
 </script>

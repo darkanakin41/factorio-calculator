@@ -17,6 +17,8 @@ items:
     name: Steel Plate
   stone-brick:
     name: Stone Brick
+  concrete:
+    name: Concrete
   wooden-chest:
     name: Wooden Chest
   copper-cable:
@@ -79,6 +81,16 @@ items:
     name: Repair Pack
   storage-tank:
     name: Storage Tank
+  electric-mining-drill:
+    name: Electric Mining Drill
+  pumpjack:
+    name: Pumpjack
+  locomotive:
+    name: Locomotive
+  cargo-wagon:
+    name: Cargo Wagon
+  fluid-wagon:
+    name: Fluid Wagon
   # Transport
   transport-belt:
     name: Transport Belt
@@ -208,6 +220,19 @@ items:
     name: Oil Refinery
     utility: machine
     craftingSpeed: 1
+  electric-furnace:
+    name: Electric Furnace
+    craftingSpeed: 2
+    utility: machine
+  chemical-plant:
+    name: Chemical Plant
+    utility: machine
+  centrifuge:
+    name: Centrifuge
+    utility: machine
+  lab:
+    name: Lab
+    utility: item
 
   # Science Packs
   automation-science-pack:

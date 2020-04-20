@@ -66,8 +66,15 @@ recipes:
     components:
       - component: wood
         quantity: 2
+  concrete:
+    craftingTime: 10
+    components:
+      - component: iron-ore
+      - component: stone-brick
+        quantity: 5
+      - component: water
+        quantity: 100
   copper-cable:
-    name: Copper Cable
     craftingTime: 0.5
     components:
       - component: copper-plate
@@ -123,6 +130,26 @@ recipes:
         quantity: 2
       - component: sulfuric-acid
         quantity: 5
+  pumpjack:
+    craftingTime: 5
+    components:
+      - component: steel-plate
+        quantity: 5
+      - component: iron-gear-wheel
+        quantity: 10
+      - component: electronic-circuit
+        quantity: 5
+      - component: pipe
+        quantity: 10
+  electric-mining-drill:
+    craftingTime: 2
+    components:
+      - component: iron-plate
+        quantity: 10
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 3
   storage-tank:
     craftingTime: 3
     components:
@@ -430,6 +457,15 @@ recipes:
     components:
       - component: stone
         quantity: 5
+  electric-furnace:
+    craftingTime: 5
+    components:
+      - component: stone-brick
+        quantity: 10
+      - component: steel-plate
+        quantity: 10
+      - component: advanced-circuit
+        quantity: 5
   steel-furnace:
     craftingTime: 3
     components:
@@ -474,6 +510,28 @@ recipes:
         quantity: 10
       - component: stone-brick
         quantity: 10
+  chemical-plant:
+    craftingTime: 5
+    components:
+      - component: steel-plate
+        quantity: 5
+      - component: iron-gear-wheel
+        quantity: 5
+      - component: electronic-circuit
+        quantity: 5
+      - component: pipe
+        quantity: 5
+  centrifuge:
+    craftingTime: 4
+    components:
+      - component: steel-plate
+        quantity: 50
+      - component: iron-gear-wheel
+        quantity: 100
+      - component: advanced-circuit
+        quantity: 100
+      - component: concrete
+        quantity: 100
 
   # Science Packs
   automation-science-pack:

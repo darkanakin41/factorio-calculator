@@ -58,6 +58,13 @@ class Recipe
     private $name;
 
     /**
+     * @var string $slug The slug of the item
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Groups({"component:read", "item:read"})
+     */
+    private $slug = '';
+
+    /**
      * The base crafting time for the recipe
      *
      * @var float
@@ -93,7 +100,21 @@ class Recipe
     {
         $this->name = $name;
 
+        if(empty($this->slug)){
+            $this->setSlug(str_replace(' ', '-', strtolower($name)));
+        }
+
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getCraftingTime(): ?float

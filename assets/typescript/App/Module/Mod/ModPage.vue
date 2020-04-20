@@ -1,192 +1,237 @@
 <template>
-  <v-container fluid>
-    <v-card>
-      <v-sheet>
-        <v-toolbar dark>
-          <v-toolbar-title>
-            {{ isCreate() ? 'Création d\'un mod' : 'Modification du mod ' + mod.name }}
-          </v-toolbar-title>
-        </v-toolbar>
-      </v-sheet>
-      <v-card-text v-if="loading">
-        <v-row no-gutters justify="center">
-          <v-progress-circular color="primary" size="50" indeterminate/>
-        </v-row>
-      </v-card-text>
-      <v-form v-else>
-        <v-card-text>
-          <v-layout wrap>
-            <v-flex xs12 md12 pa-2>
-              <v-text-field v-model="mod.name"
-                            label="Nom"
-                            :rules="required"
-                            required/>
-            </v-flex>
-            <v-flex xs12 md12 pa-2>
-              <v-text-field v-model="mod.websiteUrl"
-                            label="Official Website"
-              />
-            </v-flex>
-            <v-flex xs12 md12 pa-2>
-              <v-text-field v-model="mod.sourceUrl"
-                            label="Source Link"
-              />
-            </v-flex>
-            <v-flex xs12 md12 pa-2>
-              <tinymce-editor ref="editor"
-                              :api-key="TINYMCE_API_KEY"
-                              @onChange="onEditorChange"
-                              :init="editorConfig"
-                              :initial-value="mod.description"/>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn color="error" text @click="loadData()">Annuler</v-btn>
-          <v-btn color="primary" depressed type="submit" @click="save()">Sauvegarder</v-btn>
-        </v-card-actions>
-        <v-divider v-if="!isCreate()"/>
-        <v-card-text v-if="!isCreate()">
-          <item-table :api-searches="apiSearches" :headers="headers"/>
-        </v-card-text>
-      </v-form>
-    </v-card>
-  </v-container>
+    <v-container fluid>
+        <v-card>
+            <v-sheet>
+                <v-toolbar dark>
+                    <v-toolbar-title>
+                        {{ isCreate() ? 'Création d\'un mod' : 'Modification du mod ' + mod.name }}
+                    </v-toolbar-title>
+                </v-toolbar>
+            </v-sheet>
+            <v-card-text v-if="loading">
+                <v-row no-gutters justify="center">
+                    <v-progress-circular color="primary" size="50" indeterminate />
+                </v-row>
+            </v-card-text>
+            <v-form v-else>
+                <v-card-text>
+                    <v-layout wrap>
+                        <v-flex xs12 md12 pa-2>
+                            <v-text-field v-model="mod.name"
+                                          label="Nom"
+                                          :rules="required"
+                                          required />
+                        </v-flex>
+                        <v-flex xs12 md12 pa-2>
+                            <v-text-field v-model="mod.websiteUrl"
+                                          label="Official Website"
+                            />
+                        </v-flex>
+                        <v-flex xs12 md12 pa-2>
+                            <v-text-field v-model="mod.sourceUrl"
+                                          label="Source Link"
+                            />
+                        </v-flex>
+                        <v-flex xs12 md12 pa-2>
+                            <tinymce-editor ref="editor"
+                                            :api-key="TINYMCE_API_KEY"
+                                            @onChange="onEditorChange"
+                                            :init="editorConfig"
+                                            :initial-value="mod.description" />
+                        </v-flex>
+                    </v-layout>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer />
+                    <v-btn color="error" text @click="loadData()">Annuler</v-btn>
+                    <v-btn color="primary" depressed type="submit" @click="save()">Sauvegarder</v-btn>
+                </v-card-actions>
+            </v-form>
+            <v-divider v-if="!isCreate()" />
+            <v-card-text v-if="!isCreate()">
+                <v-tabs slider-color="primary">
+                    <v-tab ripple>
+                        Objets
+                    </v-tab>
+                    <v-tab ripple>
+                        Recettes
+                    </v-tab>
+                    <v-tab ripple v-if="">
+                        Chargement de fichier
+                    </v-tab>
+                    <v-tab-item>
+                        <item-table ref="itemTable" :api-searches="apiSearches" :headers="itemHeaders" />
+                    </v-tab-item>
+                    <v-tab-item>
+                        <recipe-table ref="recipeTable" :api-searches="apiSearches" :headers="recipeHeaders" />
+                    </v-tab-item>
+                    <v-tab-item>
+                        <mod-file-upload :recipe-table="$refs.recipeTable"
+                                         :item-table="$refs.itemTable"
+                                         :mod-resource="modResource"
+                                         :mod="mod"
+                                         />
+                    </v-tab-item>
+                </v-tabs>
+            </v-card-text>
+        </v-card>
+    </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
-import { snackbarModule } from '../../../_Common/Store'
-import { SnackbarEntry } from '../../../_Darkanakin41/Store/SnackbarModule'
-import RULES from '../../_config/rules'
-import ModResource from '../../../_Common/Resource/ModResource'
-import Mod, { newMod } from '../../../_Common/Model/Mod'
-import { TINYMCE_API_KEY } from '../../_config/configuration'
-import { DataTableHeader } from 'vuetify'
-import ApiSearch from '../../../_Darkanakin41/ApiPlatform/Model/ApiSearch'
-import ItemTable from '../../Component/ItemTable.vue'
+    import {Component, Inject, Prop, Vue} from 'vue-property-decorator'
+    import {snackbarModule} from '../../../_Common/Store'
+    import {SnackbarEntry} from '../../../_Darkanakin41/Store/SnackbarModule'
+    import RULES from '../../_config/rules'
+    import ModResource from '../../../_Common/Resource/ModResource'
+    import Mod, {newMod} from '../../../_Common/Model/Mod'
+    import {TINYMCE_API_KEY} from '../../_config/configuration'
+    import {DataTableHeader} from 'vuetify'
+    import ApiSearch from '../../../_Darkanakin41/ApiPlatform/Model/ApiSearch'
+    import ItemTable from '../../Component/ItemTable.vue'
+    import RecipeTable from "../../Component/RecipeTable.vue";
+    import ModFileUpload from "../../Component/ModFileUpload.vue";
 
-@Component({
-  components: { ItemTable }
-})
-export default class ModPage extends Vue {
-  @Inject('modResource')
-  modResource: ModResource
+    @Component({
+        components: {ModFileUpload, RecipeTable, ItemTable}
+    })
+    export default class ModPage extends Vue {
+        @Inject('modResource')
+        modResource: ModResource
 
-  @Prop({ default: null })
-  id?: string
+        @Prop({default: null})
+        id?: string
 
-  TINYMCE_API_KEY = TINYMCE_API_KEY
+        TINYMCE_API_KEY = TINYMCE_API_KEY
 
-  loading: Boolean = false
+        loading: Boolean = false
 
-  mod: Mod | null = null
+        mod: Mod | null = null
 
-  editorConfig: {} = {
-    plugins: [
-      'advlist autolink charmap code image imagetools',
-      'link lists pagebreak table textpattern wordcount'
-    ],
-    toolbar1: 'bold italic underline | styleselect | forecolor backcolor | alignleft aligncenter alignright | bullist numlist outdent indent code',
-    toolbar2: 'link | code',
-    contextmenu: 'cut copy paste pastetext | link image inserttable',
+        editorConfig: {} = {
+            plugins: [
+                'advlist autolink charmap code image imagetools',
+                'link lists pagebreak table textpattern wordcount'
+            ],
+            toolbar1: 'bold italic underline | styleselect | forecolor backcolor | alignleft aligncenter alignright | bullist numlist outdent indent code',
+            toolbar2: 'link | code',
+            contextmenu: 'cut copy paste pastetext | link image inserttable',
 
-    height: 450,
-    image_advtab: true,
-    relative_urls: false,
-    menubar: false,
-    image_caption: true,
-    extended_valid_elements: 'span[*]'
-  }
+            height: 450,
+            image_advtab: true,
+            relative_urls: false,
+            menubar: false,
+            image_caption: true,
+            extended_valid_elements: 'span[*]'
+        }
 
-  required: {}[] = [
-    RULES.required
-  ]
+        required: {}[] = [
+            RULES.required
+        ]
 
-  readonly headers: DataTableHeader[] = [
-    {
-      text: 'Nom',
-      value: 'name'
-    },
-    {
-      text: 'Type',
-      value: 'type'
-    },
-    {
-      text: 'Utilité',
-      value: 'utility'
-    },
-    {
-      text: 'Détail',
-      value: 'detail',
-      sortable: false
+        readonly itemHeaders: DataTableHeader[] = [
+            {
+                text: 'Nom',
+                value: 'name'
+            },
+            {
+                text: 'Type',
+                value: 'type'
+            },
+            {
+                text: 'Utilité',
+                value: 'utility'
+            },
+            {
+                text: 'Détail',
+                value: 'detail',
+                sortable: false
+            }
+        ]
+
+        readonly recipeHeaders: DataTableHeader[] = [
+            {
+                text: 'Nom',
+                value: 'name'
+            },
+            {
+                text: 'Mod',
+                value: 'mod.name'
+            },
+            {
+                text: 'Temps de craft',
+                value: 'craftingTime'
+            },
+            {
+                text: 'Détail',
+                value: 'detail',
+                sortable: false
+            }
+        ]
+
+        get apiSearches(): ApiSearch[] | undefined {
+            const search: ApiSearch [] = []
+            if (!this.isCreate()) {
+                search.push(
+                    {field: 'mod.id', query: this.id ? this.id : ''}
+                )
+            }
+            return search
+        }
+
+        async created() {
+            await this.loadData()
+        }
+
+        async loadData() {
+            this.loading = true
+            try {
+                if (!this.id) {
+                    this.mod = newMod()
+                } else {
+                    this.mod = await this.modResource.getOne(this.id)
+                }
+            } finally {
+            }
+            this.loading = false
+        }
+
+        isCreate() {
+            return this.mod === null || this.mod.id === null
+        }
+
+        onEditorChange(editor) {
+            this.mod?.description = editor.level.content
+        }
+
+        async save() {
+            this.loading = true
+            try {
+                let snackback: SnackbarEntry = {
+                    color: 'success',
+                    icon: 'mdi-check'
+                }
+
+                if (this.mod && this.mod.id) {
+                    this.mod = await this.modResource.patch(this.mod.id, this.mod)
+                    snackback.title = 'La modification du produit à bien été effectuée'
+                } else if (this.mod) {
+                    this.mod = await this.modResource.post(this.mod)
+                    snackback.title = 'L\'ajout du produit à bien été effectué'
+                    await this.$router.push({name: 'mod-edit', params: {id: this.mod.id}})
+                }
+                snackbarModule.setSnackbarEntry(snackback)
+            } catch (error) {
+                snackbarModule.setSnackbarEntry({
+                    icon: 'mdi-alert-circle-outline',
+                    message: error.response.data['hydra:description'],
+                    color: 'error'
+                })
+            }
+            this.loading = false
+        }
+
     }
-  ]
-
-  get apiSearches (): ApiSearch[] | undefined {
-    const search: ApiSearch [] = []
-    if (!this.isCreate()) {
-      search.push(
-        { field: 'mod.id', query: this.id ? this.id : '' }
-      )
-    }
-    return search
-  }
-
-  async created () {
-    await this.loadData()
-  }
-
-  async loadData () {
-    this.loading = true
-    try {
-      if (!this.id) {
-        this.mod = newMod()
-      } else {
-        this.mod = await this.modResource.getOne(this.id)
-      }
-    } finally {
-    }
-    this.loading = false
-  }
-
-  isCreate () {
-    return this.mod === null || this.mod.id === null
-  }
-
-  onEditorChange (editor) {
-    this.mod?.description = editor.level.content
-  }
-
-  async save () {
-    this.loading = true
-    try {
-      let snackback: SnackbarEntry = {
-        color: 'success',
-        icon: 'mdi-check'
-      }
-
-      if (this.mod && this.mod.id) {
-        this.mod = await this.modResource.patch(this.mod.id, this.mod)
-        snackback.title = 'La modification du produit à bien été effectuée'
-      } else if (this.mod){
-        this.mod = await this.modResource.post(this.mod)
-        snackback.title = 'L\'ajout du produit à bien été effectué'
-        await this.$router.push({ name: 'mod-edit', params: { id: this.mod.id } })
-      }
-      snackbarModule.setSnackbarEntry(snackback)
-    } catch (error) {
-      snackbarModule.setSnackbarEntry({
-        icon: 'mdi-alert-circle-outline',
-        message: error.response.data['hydra:description'],
-        color: 'error'
-      })
-    }
-    this.loading = false
-  }
-
-}
 </script>
 
 <style lang="scss" scoped>

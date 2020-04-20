@@ -9,9 +9,21 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
+use App\Controller\Api\ModController;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *          "get",
+ *          "patch",
+ *          "upload_files"={
+ *              "method"="PUT",
+ *              "path"="/mods/{id}/upload-file",
+ *              "controller"=ModController::class,
+ *              "deserialize"=false,
+ *          }
+ *     }
+ * )
  * @ApiFilter(PropertyFilter::class, arguments={"parameterName": "props" })
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "name": "ipartial"})
  * @ApiFilter(OrderFilter::class, properties={"name"})

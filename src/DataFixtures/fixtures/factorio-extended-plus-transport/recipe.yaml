@@ -76,14 +76,14 @@ recipes:
     mod: factorio-extended-plus-transport
     craftingTime: .5
     components:
-      - component: titanium-plate
+      - component: titanium-alloy
   pipe-to-ground-mk2:
     mod: factorio-extended-plus-transport
     craftingTime: .5
     components:
       - component: pipe-mk2
         quantity: 20
-      - component: titanium-plate
+      - component: titanium-alloy
         quantity: 10
   storage-tank-mk2:
     mod: factorio-extended-plus-transport
@@ -91,5 +91,5 @@ recipes:
     components:
       - component: storage-tank
         quantity: 4
-      - component: titanium-plate
+      - component: titanium-alloy
         quantity: 15

@@ -8,7 +8,7 @@ use App\Entity\Recipe;
 use App\Entity\RecipeComponent;
 use App\Entity\RecipeOutput;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -108,6 +108,7 @@ class DefaultFixtures extends Fixture
          */
         foreach ($items['items'] as $key => $itemData) {
             $item = new Item();
+            $item->setSlug($key);
             $this->items[$key] = $item;
 
             foreach ($itemData as $field => $value) {
@@ -147,6 +148,7 @@ class DefaultFixtures extends Fixture
          */
         foreach ($recipes['recipes'] as $key => $productData) {
             $recipe = new Recipe();
+            $recipe->setSlug($key);
 
             $output = null;
             foreach ($productData as $field => $value) {
@@ -249,7 +251,7 @@ class DefaultFixtures extends Fixture
                 if (isset($this->items[$value])) {
                     $value = $this->items[$value];
                 } else {
-                    throw new Exception("Unknown component " . $value . " for product " . $recipe->getName());
+                    throw new Exception("Unknown product " . $value . " for recipe " . $recipe->getName());
                 }
 
             }
