@@ -1,9 +1,6 @@
 FROM php:7.3-fpm
 LABEL maintainer="Pierre LEJEUNE <darkanakin41@gmail.com>"
 
-COPY .ca-certificates/* /usr/local/share/ca-certificates/
-RUN update-ca-certificates
-
 RUN docker-php-ext-install opcache
 
 RUN apt-get update -y && apt-get install -y zlib1g-dev libzip-dev && rm -rf /var/lib/apt/lists/* && docker-php-ext-install zip
@@ -43,15 +40,4 @@ RUN mkdir -p "$COMPOSER_HOME/cache" \
 && chown -R www-data:www-data $COMPOSER_HOME \
 && chown -R www-data:www-data /var/www
 
-# fixuid
-ADD fixuid.tar.gz /usr/local/bin
-RUN chown root:root /usr/local/bin/fixuid && \
-    chmod 4755 /usr/local/bin/fixuid && \
-    mkdir -p /etc/fixuid
-COPY fixuid.yml /etc/fixuid/config.yml
-USER www-data
-
 VOLUME /composer/cache
-
-ENTRYPOINT ["fixuid","-q","docker-php-entrypoint"]
-CMD ["php-fpm"]

@@ -1,7 +1,7 @@
 var Encore = require('@symfony/webpack-encore');
 
-const sockHost = "node.{{DOCKER_DEVBOX_DOMAIN_PREFIX}}.{{DOCKER_DEVBOX_DOMAIN}}";
-const projectUrl = "https://" + sockHost + "/";
+const sockHost = "node.{{core.domain.sub}}.{{core.domain.ext}}";
+const projectUrl = "http://" + sockHost + "/";
 const baseFolder = "public/";
 const publicPath = "build/";
 

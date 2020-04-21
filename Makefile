@@ -4,10 +4,10 @@ init: docker-up install init-db
 watch: docker-up serve
 
 docker-up:
-	@dc up -d
+	@docker-compose up -d
 
 docker-down:
-	@dc down
+	@docker-compose down
 
 install: composer.lock yarn.lock
 	composer install

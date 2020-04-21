@@ -35,3 +35,23 @@ yarn-error.log
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+###> gfi-centre-ouest/ddb ###
+docker-compose.yml
+.certs/mail.factorio-calculator.test.key
+.certs/mail.factorio-calculator.test.crt
+.certs/mail.test.factorio-calculator.key
+.certs/mail.test.factorio-calculator.crt
+.certs/node.test.factorio-calculator.key
+.certs/node.test.factorio-calculator.crt
+.certs/test.factorio-calculator.key
+.certs/test.factorio-calculator.crt
+###< gfi-centre-ouest/ddb ###
+.docker/web/nginx.conf
+.docker/php/msmtprc
+.bin/mysql
+.bin/node
+.bin/vue
+.bin/yarn
+.bin/composer
+.bin/php
