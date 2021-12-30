@@ -10,17 +10,13 @@ local php_workdir = "/var/www/html";
 local node_workdir = "/app";
 local mysql_workdir = "/app";
 
-local compile_command(name, args, workdir)= {
-    ["ddb.emit.docker:binary[" + name + "](name)"]: name,
-    ["ddb.emit.docker:binary[" + name + "](args)"]: args,
-    ["ddb.emit.docker:binary[" + name + "](workdir)"]: workdir,
- };
-
 local prefix_port(port, output_port = null)= [port_prefix + (if output_port == null then std.substr(port, std.length(port) - 2, 2) else output_port) + ":" + port];
 
 ddb.Compose() {
 	"services": {
-		"db": ddb.Build("db") + ddb.User() + {
+		"db": ddb.Build("db") + ddb.User()
+		    + ddb.Binary("mysql", mysql_workdir, "mysql  -hdb -u" + db_user + " -p" + db_password)
+		    + {
 			"environment": {
                 "MYSQL_ROOT_PASSWORD": db_password,
                 "MYSQL_DATABASE": db_user,
@@ -31,32 +27,34 @@ ddb.Compose() {
 			"volumes": [
 				"db-data:/var/lib/mysql:rw",
 				ddb.path.project + ":" + mysql_workdir
-			],
-             labels+:
-                compile_command("mysql", "mysql  -hdb -u" + db_user + " -p" + db_password, mysql_workdir)
+			]
 		},
 		[if ddb.env.is("dev") then "mail"]: ddb.Build("mail") + ddb.VirtualHost("80", std.join(".", ["mail", domain]), "mail", certresolver=if ddb.env.is("prod") then "letsencrypt" else null) ,
-		"node": ddb.Build("node") + ddb.User() + ddb.VirtualHost("8080", std.join(".", ["node", domain]), "node", certresolver=if ddb.env.is("prod") then "letsencrypt" else null) {
+		"node": ddb.Build("node")
+		    + ddb.User()
+		    + ddb.VirtualHost("8080", std.join(".", ["node", domain]), "node", certresolver=if ddb.env.is("prod") then "letsencrypt" else null)
+		    + ddb.Binary("node", node_workdir, "node")
+		    + ddb.Binary("vue", node_workdir, "vue")
+		    + ddb.Binary("yarn", node_workdir, "yarn")
+		    + {
 			"volumes": [
 				ddb.path.project + ":" + node_workdir + ":rw",
 				"node-cache:/home/node/.cache:rw",
 				"node-npm-packages:/home/node/.npm-packages:rw"
-			],
-             labels+:
-                compile_command("node", "node", node_workdir) +
-                compile_command("yarn", "yarn", node_workdir) +
-                compile_command("vue", "vue", node_workdir)
+			]
 		},
-		"php": ddb.Build("php") + ddb.User() + ddb.XDebug() {
+		"php": ddb.Build("php")
+		    + ddb.User()
+		    + ddb.XDebug()
+		    + ddb.Binary("composer", php_workdir, "composer")
+		    + ddb.Binary("php", php_workdir, "php")
+		    + {
 			"volumes": [
 				"php-composer-cache:/composer/cache:rw",
 				"php-composer-vendor:/composer/vendor:rw",
 				ddb.path.project + ":" + php_workdir + ":rw",
                 ddb.path.project + ".docker/php/php-config.ini:/usr/local/etc/php/conf.d/php-config.ini"
-			],
-            labels+:
-                compile_command("php", "php", php_workdir) +
-                compile_command("composer", "composer", php_workdir)
+			]
 		},
 		"web": ddb.Build("web") + ddb.VirtualHost("80", domain, "app", certresolver=if ddb.env.is("prod") then "letsencrypt" else null) {
 			"volumes": [

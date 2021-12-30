@@ -29,6 +29,7 @@ class UserFixtures extends Fixture
         $user->setFullname("Pierre LEJEUNE");
         $user->setPlainPassword("azerty123");
         $user->setEmail("darkanakin41@gmail.com");
+        $user->setEnabled(true);
         $user->setRoles(['ROLE_ADMIN']);
 
         $this->userManager->updatePassword($user);

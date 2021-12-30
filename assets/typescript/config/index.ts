@@ -8,7 +8,7 @@ export interface Config {
 
 const config: Config = {
   api: {
-    baseURL: 'https://factorio-calculator.test/api'
+    baseURL: 'http://factorio-calculator.test/api'
   }
 }
 
